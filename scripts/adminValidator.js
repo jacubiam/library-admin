@@ -47,7 +47,7 @@ export const validate = (event, type) => {
 
     //Alphanumeric test for title
     if (targets[0].name === "title") {
-        if (!(/^(\w+\s?)+$/.test(targets[0].value))) {
+        if (!(/^(\w\.?\s?)+$/.test(targets[0].value))) {
             validation.state = false;
             validation.field = targets[0].name;
             validation.message = "Title is not correct, use alphanumeric chars only and avoid long spaces";
@@ -60,7 +60,7 @@ export const validate = (event, type) => {
 
     //Alphabetical only test
     if (targets[1].name === "authors") {
-        if (!(/^([a-zA-Z]+\s?)+$/.test(targets[1].value))) {
+        if (!(/^([a-zA-Z]\.?\s?)+$/.test(targets[1].value))) {
             validation.state = false;
             validation.field = targets[1].name;
             validation.message = "Authors is not correct, use alphabetical chars only and avoid long spaces";
@@ -73,10 +73,11 @@ export const validate = (event, type) => {
 
     //Numeric integer only test
     if (targets[2].name === "pages") {
-        if (!(/^\d+$/.test(targets[2].value))) {
+        console.log(targets[2].name);
+        if (!(/^\d+$/.test(targets[2].value)) || targets[2].value <= 0) {
             validation.state = false;
             validation.field = targets[2].name;
-            validation.message = "Pages is not correct, use numeric chars only and avoid long spaces";
+            validation.message = "Pages is not correct, use positive integers only and avoid long spaces";
             return validation;
         };
     } else {
@@ -86,7 +87,7 @@ export const validate = (event, type) => {
 
     //Alphabetical only test
     if (targets[3].name === "genre") {
-        if (!(/^([a-zA-Z]+\s?)+$/.test(targets[3].value))) {
+        if (!(/^[a-zA-Z]+$/.test(targets[3].value))) {
             validation.state = false;
             validation.field = targets[3].name;
             validation.message = "Genre is not correct, use alphabetical chars only and avoid long spaces";
@@ -99,7 +100,7 @@ export const validate = (event, type) => {
 
     //Numeric integer only test
     if (targets[4].name === "year") {
-        if (!(/^\d+$/.test(targets[4].value))) {
+        if (!(/^\-?\d+$/.test(targets[4].value))) {
             validation.state = false;
             validation.field = targets[4].name;
             validation.message = "Pages is not correct, use numeric chars only and avoid long spaces";

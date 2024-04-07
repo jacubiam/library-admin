@@ -1,7 +1,4 @@
 id,title,authors,pages,genre,year,status
-1,"Harry Potter","J.K. Rowland",1000,adventure,1991,available
-2,"Shutter Island","J.K. U",1050,adventure,1987,unavailable
-3,Island,"J.K. U",1050,adventure,1987,unavailable
 3071,Aragon,DFG,5600,Music,1999,available
 1380,"Fantastic Two",Frank,2000,MOFO,1999,available
 3835,Holes,Unknown,3000,Action,1999,available
@@ -12,9 +9,9 @@ id,title,authors,pages,genre,year,status
 1415,Flyeart,"Cristiano Ronaldo",5000,Literature,2010,available
 6175,Boomers,Zeimer,4000,Science,2022,available
 7602,Bo,Gabriel,4000,Romance,2006,available
-1854,Bo,Sinatra,2000,Romance,4000,available
-7327,derrr,ffff,1600,Act,1666,available
-9121,derrr,ffff,1600,Act,1666,available
+1854,Bo,Sinatra,2000,Romance,2010,available
+7327,Der,Bernard,2000,Science,2010,unavailable
+9121,Der,Bernard,2000,Science,2010,available
 5596,ZASS,ffff,1600,Act,1666,available
 6269,sfafa,ffff,1600,Act,1666,available
 4386,sfafa,ffff,1600,Act,1666,available
@@ -34,25 +31,11 @@ id,title,authors,pages,genre,year,status
 1809,Dragons,Frank,2000,Terror,1999,available
 7586,Dragons,Frank,2000,Terror,1999,available
 1437,Dragons,Baran,2000,Terror,1999,unavailable
-2766,"La Boda  2",Baran,2000,Terror,1999,unavailable
-6145,"La Boda  2",Baran,2000,Terror,1999,available
-3892,"La Boda  2",Baran,2000,Terror,1999,available
-7679,"La Boda  2",Baran,2000,Terror,1999,available
-7674,"La Boda  2",Baran,2000,Terror,1999,available
-3514,"La Boda 2",Baran,2000,Terror,1999,available
-1105,"La Boda 2",Baran,0,Terror,1999,available
-7932,"La Boda 2",Baran,1600,Music,1999,available
-7434,"La Boda 2",Baran,1600,Music,1999,available
-1791,"La Boda 2",Baran,1600,Music,1999,available
-1952,"La Boda 2",Baran,1600,Music,1999,available
-2012,"La Boda 2",Baran,1600,Music,1999,available
-5652,"La Boda 2",Baran,1600,Music,1999,available
-8620,"La Boda 2",Baran,1600,Music,1999,available
-5712,"La Boda 2",Baran,1600,Music,1999,available
-3381,"La Boda 2",Baran,1600,Music,1999,available
-2078,"La Boda 2",Baran,1600,Music,1999,available
-3487,"La Boda 2",Baran,1600,Music,1999,available
-1102,"La Boda 2",Baran,1600,Music,1999,available
-142,"La Boda 2",Baran,1600,Music,1999,available
-7724,"La Boda 2",Baran,1600,Music,1999,available
-9823,"La Boda 2",Baran,1600,Music,1999,available
+7886,"Lord of The Rings","J. Tolkien",5000,Adventure,1910,available
+6454,"Lord of The Rings","J. Tolkien",5000,Adventure,-1900,available
+9580,"Mi lucha",Adolf,2000,Biography,1934,unavailable
+7545,"Lord of The Rings","J. Tolkien",5600,Adventure,1950,unavailable
+6215,"Lord of The Rings","J. Tolkien",100,Adventure,0,available
+43,"Lord of The Rings","J. Tolkien",0,Adventure,0,available
+3915,"Lord of The Rings","J. Tolkien",0,Adventure,0,available
+2564,"Lord of The Rings","J. Tolkien",0,Adventure,0,available

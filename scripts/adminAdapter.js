@@ -1,5 +1,7 @@
 import { validate } from "./adminValidator.js";
 
+let idHolder;
+
 export const getAll = async () => {
     const res = await fetch("../api/books.php?query=get_all");
     const data = await res.json();
@@ -18,7 +20,7 @@ export const getAll = async () => {
             <td>${value.year}</td>
             <td>${value.status}</td>
             <td>
-                <button type='button' onclick='edit(event)'>Edit</button>
+                <button type='button' onclick='editAdapter(event)'>Edit</button>
                 <button type='button' onclick='deleteBookAdapter(event)'>Delete</button>
             </td>
         `
@@ -49,12 +51,12 @@ export const createBook = async (event) => {
     };
 
     const data = {
-        title: event.target[0].value,
-        authors: event.target[1].value,
-        pages: event.target[2].value,
-        genre: event.target[3].value,
-        year: event.target[4].value,
-        status: selectedRadio.value,
+        title: event.target[0].value.trim(),
+        authors: event.target[1].value.trim(),
+        pages: event.target[2].value.trim(),
+        genre: event.target[3].value.trim(),
+        year: event.target[4].value.trim(),
+        status: selectedRadio.value.trim(),
     };
 
     const res = await fetch("../api/books.php", {
@@ -154,6 +156,45 @@ export const deleteBook = async (event) => {
 
     getAll();
 };
+
+export const edit = async (event) => {
+    const rowId = event.target.parentElement.parentElement.id;
+    const res = await fetch(`../api/books.php?query=get_book&id=${rowId}`);
+    const data = await res.json();
+    idHolder = data.id;
+
+    let available ="", unavailable ="";
+
+    if (data.status === "available") {
+        available = "checked";
+    } else {
+        unavailable = "checked";
+    }
+
+    const mainForm = document.getElementById("main-form");
+    mainForm.innerHTML = "";
+
+    const editForm = document.createElement("form");
+    editForm.id = "edit-book-form";
+    editForm.onsubmit = editBookAdapater;
+    editForm.innerHTML = `
+        <h1>Edit Book</h1>
+        <input class="d-block" type="text" name="title" placeholder="Title" required value="${data.title}">
+        <input class="d-block" type="text" name="authors" placeholder="Autor" required value="${data.authors}">
+        <input class="d-block" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required value="${data.pages}">
+        <input class="d-block" type="text" name="genre" placeholder="Genre" required value="${data.genre}">
+        <input class="d-block" type="number" name="year" placeholder="Year" required value="${data.year}">
+        <label for="available">Available</label>
+        <input class="d-inline" type="radio" name="status" value="available" id="available" ${available}>
+        <label for="unavailable">Unavailable</label>
+        <input class="d-inline" type="radio" name="status" value="unavailable" id="unavailable" ${unavailable}>
+        <div>
+            <button type="submit">Edit book</button>
+            <button type="button" onclick='defaultForm()'>Cancel</button>
+        </div>
+    `;
+    mainForm.appendChild(editForm);
+}
 
 const clearFields = (event) => {
     const target = event.target;
