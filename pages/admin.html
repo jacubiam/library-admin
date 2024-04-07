@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles.css">
+    <title>Books Management</title>
+</head>
+
+<body>
+    <section id="main-form">
+        <form id="create-book-form" method="post" onsubmit="createBookAdapter(event)">
+            <h1>Add Book</h1>
+            <input class="d-block" type="text" name="title" placeholder="Title" required>
+            <input class="d-block" type="text" name="authors" placeholder="Autor" required>
+            <input class="d-block" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required>
+            <input class="d-block" type="text" name="genre" placeholder="Genre" required>
+            <input class="d-block" type="number" name="year" placeholder="Year" required>
+            <label for="available">Available</label>
+            <input class="d-inline" type="radio" name="status" value="available" id="available" checked>
+            <label for="unavailable">Unavailable</label>
+            <input class="d-inline" type="radio" name="status" value="unavailable" id="unavailable">
+            <button class="d-block" type="submit">Add book</button>
+        </form>
+    </section>
+    <article>
+        <span id="response"></span>
+    </article>
+    <section>
+        <h1>Book List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th># Pages</th>
+                    <th>Genre</th>
+                    <th>Year</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="../scripts/admin.js"></script>
+</body>
+
+</html>
