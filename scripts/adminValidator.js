@@ -47,7 +47,7 @@ export const validate = (event, type) => {
 
     //Alphanumeric test for title
     if (targets[0].name === "title") {
-        if (!(/^(\w\.?\s?)+$/.test(targets[0].value))) {
+        if (!(/^(\w'?\.?\s?)+$/.test(targets[0].value))) {
             validation.state = false;
             validation.field = targets[0].name;
             validation.message = "Title is not correct, use alphanumeric chars only and avoid long spaces";
@@ -60,7 +60,7 @@ export const validate = (event, type) => {
 
     //Alphabetical only test
     if (targets[1].name === "authors") {
-        if (!(/^([a-zA-Z]\.?\s?)+$/.test(targets[1].value))) {
+        if (!(/^([a-zA-Z]'?\.?\s?)+$/.test(targets[1].value))) {
             validation.state = false;
             validation.field = targets[1].name;
             validation.message = "Authors is not correct, use alphabetical chars only and avoid long spaces";
