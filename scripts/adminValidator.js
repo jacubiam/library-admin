@@ -87,7 +87,7 @@ export const validate = (event, type) => {
 
     //Alphabetical only test
     if (targets[3].name === "genre") {
-        if (!(/^[a-zA-Z]+$/.test(targets[3].value))) {
+        if (!(/^([a-zA-Z]\s?)+$/.test(targets[3].value))) {
             validation.state = false;
             validation.field = targets[3].name;
             validation.message = "Genre is not correct, use alphabetical chars only and avoid long spaces";
