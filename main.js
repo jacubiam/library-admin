@@ -17,7 +17,7 @@ const getAll = async () => {
         tr.innerHTML += `
             <td>${value.id}</td>
             <td>${value.title}</td>
-            <td>${value.authors}</td>
+            <td>${value.author}</td>
             <td>${value.pages}</td>
             <td>${value.genre}</td>
             <td>${value.year}</td>
@@ -104,7 +104,7 @@ const search = async (filter, input) => {
         tr.innerHTML += `
             <td>${value.id}</td>
             <td>${value.title}</td>
-            <td>${value.authors}</td>
+            <td>${value.author}</td>
             <td>${value.pages}</td>
             <td>${value.genre}</td>
             <td>${value.year}</td>

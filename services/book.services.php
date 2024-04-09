@@ -3,7 +3,7 @@ class Book implements JsonSerializable
 {
     private $id;
     private $title;
-    private $authors;
+    private $author;
     private $pages;
     private $genre;
     private $year;
@@ -31,7 +31,7 @@ class Book implements JsonSerializable
         /* print_r($fields); */
         $this->id = $fields['id'];
         $this->title = $fields['title'];
-        $this->authors = $fields['authors'];
+        $this->author = $fields['author'];
         $this->pages = $fields['pages'];
         $this->genre = $fields['genre'];
         $this->year = $fields['year'];
@@ -47,7 +47,7 @@ class Book implements JsonSerializable
         $data = [
             $this->id,
             $this->title,
-            $this->authors,
+            $this->author,
             $this->pages,
             $this->genre,
             $this->year,

@@ -59,11 +59,11 @@ export const validate = (event, type) => {
     };
 
     //Alphabetical only test
-    if (targets[1].name === "authors") {
+    if (targets[1].name === "author") {
         if (!(/^([a-zA-Z]'?\.?\s?)+$/.test(targets[1].value))) {
             validation.state = false;
             validation.field = targets[1].name;
-            validation.message = "Authors is not correct, use alphabetical chars only and avoid long spaces";
+            validation.message = "author is not correct, use alphabetical chars only and avoid long spaces";
             return validation;
         };
     } else {

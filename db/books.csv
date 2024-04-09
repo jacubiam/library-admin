@@ -1,4 +1,4 @@
-id,title,authors,pages,genre,year,status
+id,title,author,pages,genre,year,status
 265,"Harry Potter and the Sorcerer's Stone","J.K. Rowling",320,Fantasy,1997,available
 2410,"The Hunger Games","Suzanne Collins",374,"Young Adult",2008,available
 712,Twilight,"Stephenie Meyer",498,"Young Adult",2005,available

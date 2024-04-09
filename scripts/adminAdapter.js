@@ -14,7 +14,7 @@ export const getAll = async () => {
         tr.innerHTML += `
             <td>${value.id}</td>
             <td>${value.title}</td>
-            <td>${value.authors}</td>
+            <td>${value.author}</td>
             <td>${value.pages}</td>
             <td>${value.genre}</td>
             <td>${value.year}</td>
@@ -52,7 +52,7 @@ export const createBook = async (event) => {
 
     const data = {
         title: event.target[0].value.trim(),
-        authors: event.target[1].value.trim(),
+        author: event.target[1].value.trim(),
         pages: event.target[2].value.trim(),
         genre: event.target[3].value.trim(),
         year: event.target[4].value.trim(),
@@ -109,7 +109,7 @@ export const editBook = async (event) => {
     const dataUpdated = {
         id: idHolder.trim(),
         title: event.target[0].value.trim(),
-        authors: event.target[1].value.trim(),
+        author: event.target[1].value.trim(),
         pages: event.target[2].value.trim(),
         genre: event.target[3].value.trim(),
         year: event.target[4].value.trim(),
@@ -180,7 +180,7 @@ export const edit = async (event) => {
     editForm.innerHTML = `
         <h1>Edit Book</h1>
         <input class="d-block" type="text" name="title" placeholder="Title" required value="${data.title}">
-        <input class="d-block" type="text" name="authors" placeholder="Autor" required value="${data.authors}">
+        <input class="d-block" type="text" name="author" placeholder="Autor" required value="${data.author}">
         <input class="d-block" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required value="${data.pages}">
         <input class="d-block" type="text" name="genre" placeholder="Genre" required value="${data.genre}">
         <input class="d-block" type="number" name="year" placeholder="Year" required value="${data.year}">
