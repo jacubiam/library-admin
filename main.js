@@ -116,3 +116,16 @@ const search = async (filter, input) => {
         tbody.appendChild(tr)
     });
 };
+
+let listStatus = true;
+const listToggler = (event) => {
+    const button = event.target;
+    if (listStatus) {
+        setTimeout(() => {
+            button.innerHTML = "Show Book List";
+        }, 300)
+    } else {
+        button.innerHTML = "Hide Book List";
+    }
+    listStatus = !listStatus;
+}

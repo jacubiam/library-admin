@@ -33,8 +33,14 @@
     </section>
 
     <section class="overflow-x-auto">
-        <h1>Book List</h1>
-        <table class="table table-sm table-bordered table-hover">
+        <div class="mb-3">
+            <h1 class="d-inline align-middle">Book List</h1>
+            <button class="btn btn-primary align-text-top ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-table"
+                aria-expanded="true" aria-controls="collapse-table" onclick="listToggler(event)">
+                Hide Book List
+            </button>
+        </div>
+        <table id="collapse-table" class="collapse show table table-sm table-bordered table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
