@@ -1,41 +1,11 @@
 id,title,authors,pages,genre,year,status
-3071,Aragon,DFG,5600,Music,1999,available
-1380,"Fantastic Two",Frank,2000,MOFO,1999,available
-3835,Holes,Unknown,3000,Action,1999,available
-7694,Shafer,Douglas,1782,Act,1666,unavailable
-4892,Wramer,"Aaron GH",4000,Terror,1991,unavailable
-9617,Dragons,Uron,3000,Sports,1881,available
-4482,Deeper,Unknown,2000,Comedy,2004,available
-1415,Flyeart,"Cristiano Ronaldo",5000,Literature,2010,available
-6175,Boomers,Zeimer,4000,Science,2022,available
-7602,Bo,Gabriel,4000,Romance,2006,available
-1854,Bo,Sinatra,2000,Romance,2010,available
-7327,Der,Bernard,2000,Science,2010,unavailable
-9121,Der,Bernard,2000,Science,2010,available
-5596,ZASS,ffff,1600,Act,1666,available
-6269,sfafa,ffff,1600,Act,1666,available
-4386,sfafa,ffff,1600,Act,1666,available
-793,ZASS,ffff,1600,Act,1666,available
-4529,rwrer,ffff,1600,Act,1666,available
-2798,Dragons,Frank,2000,Terror,1999,unavailable
-839,Dragons,Frank,2000,Terror,1999,unavailable
-9240,Dragons,Frank,2000,Terror,1999,available
-2198,Dragons,Frank,2000,Terror,1999,available
-4643,Dragons,Frank,2000,Terror,1999,available
-5850,Dragons,Frank,2000,Terror,1999,available
-8631,Dragons,Frank,2000,Terror,1999,available
-5331,Dragons,Frank,2000,Terror,1999,available
-968,Dragons,Frank,2000,Terror,1999,available
-7808,Dragons,Frank,2000,Terror,1999,available
-8409,Dragons,Frank,2000,Terror,1999,available
-1809,Dragons,Frank,2000,Terror,1999,available
-7586,Dragons,Frank,2000,Terror,1999,available
-1437,Dragons,Baran,2000,Terror,1999,unavailable
-7886,"Lord of The Rings","J. Tolkien",5000,Adventure,1910,available
-6454,"Lord of The Rings","J. Tolkien",5000,Adventure,-1900,available
-9580,"Mi lucha",Adolf,2000,Biography,1934,unavailable
-7545,"Lord of The Rings","J. Tolkien",5600,Adventure,1950,unavailable
-6215,"Lord of The Rings","J. Tolkien",100,Adventure,0,available
-43,"Lord of The Rings","J. Tolkien",0,Adventure,0,available
-3915,"Lord of The Rings","J. Tolkien",0,Adventure,0,available
-2564,"Lord of The Rings","J. Tolkien",0,Adventure,0,available
+265,"Harry Potter and the Sorcerer's Stone","J.K. Rowling",320,Fantasy,1997,available
+2410,"The Hunger Games","Suzanne Collins",374,"Young Adult",2008,available
+712,Twilight,"Stephenie Meyer",498,"Young Adult",2005,available
+9494,"Don Quixote","Miguel de Cervantes",900,"Classic Literature",1615,available
+3246,"A Tale of Two Cities","Charles Dickens",352,"Historical Fiction",1859,available
+5888,"The Lord of the Rings","J.R.R. Tolkien",1200,"Epic Fantasy",1955,available
+3656,"To Kill a Mockingbird","Harper Lee",281,Classic,1960,available
+2536,1984,"George Orwell",328,"Dystopian Fiction",1949,available
+5687,"Pride and Prejudice","Jane Austen",279,Classic,1813,available
+2329,"The Great Gatsby","F. Scott Fitzgerald",180,Classic,1925,available
