@@ -4,18 +4,37 @@ spl_autoload_register(function ($class_name) {
 });
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
-    if ($_GET['query'] === "get_all") {
-        $books = Book::get_all();
-        header('Content-type: application/json');
-        echo json_encode($books);
-    }
+    if (isset($_GET['query'])) {
+        if ($_GET['query'] === "get_all") {
+            $books = Book::get_all();
+            header('Content-type: application/json');
+            echo json_encode($books);
+        }
 
-    if ($_GET['query'] === "get_book") {
-        $get_book = Book::get_book($_GET['id']);
-        header('Content-type: application/json');
-        echo json_encode($get_book);
-    }
+        if ($_GET['query'] === "get_book") {
+            $get_book = Book::get_book($_GET['id']);
+            header('Content-type: application/json');
+            echo json_encode($get_book);
+        }
 
+        if (isset($_GET['search'])) {
+            $books = Book::get_all();
+            $search = $_GET['search'];
+            $books_filtered = array_filter($books, function ($book) use ($search) {
+                return (strtolower($book[$_GET['query']]) === strtolower($search));
+            });
+            $books_filtered = array_slice($books_filtered, 0);
+
+            if (count($books_filtered) !== 0) {
+                header('Content-type: application/json');
+                echo json_encode($books_filtered);
+            } else {
+                header('Content-type: application/json');
+                http_response_code(404);
+                echo json_encode(array("res" => "$search not found"));
+            }
+        }
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
