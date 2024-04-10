@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
     if (isset($_GET['query'])) {
         if ($_GET['query'] === "get_all") {
             $books = Book::get_all();
+            sort($books);
             header('Content-type: application/json');
             echo json_encode($books);
         }
@@ -24,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
                 return (strtolower($book[$_GET['query']]) === strtolower($search));
             });
             $books_filtered = array_slice($books_filtered, 0);
-
+            sort($books_filtered);
             if (count($books_filtered) !== 0) {
                 header('Content-type: application/json');
                 echo json_encode($books_filtered);
