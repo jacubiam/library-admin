@@ -1,62 +1,34 @@
-const getAll = async () => {
+let listCache = undefined;
+let resultCache = undefined;
+let lastFilter = undefined;
+let lastInput = undefined;
+
+const getAllAdapter = async () => {
     const res = await fetch("./api/books.php?query=get_all");
     const data = await res.json();
+    return data;
+}
 
+const searchAdapter = async (filter, input) => {
+    const res = await fetch(`./api/books.php?query=${filter}&search=${input}`);
+    const data = await res.json();
+    return data;
+}
 
-    const tableBody = document.getElementById("table-body");
-    tableBody.innerHTML = "";
-    data.forEach(value => {
-        let action = "N/A";
+const getAll = async () => {
+    const data = await getAllAdapter();
+    listCache = data;
 
-        if (value.status === "available") {
-            action = "<button type='button' onclick='borrow(event)'>Borrow</button>"
-        }
-
-        const tr = document.createElement("tr");
-        tr.id = value.id;
-        tr.innerHTML += `
-            <td>${value.id}</td>
-            <td>${value.title}</td>
-            <td>${value.author}</td>
-            <td>${value.pages}</td>
-            <td>${value.genre}</td>
-            <td>${value.year}</td>
-            <td>${value.status}</td>
-            <td>
-                ${action}
-            </td>
-        `
-        tableBody.appendChild(tr)
-    });
+    sortList(data);
 };
-
-getAll();
-
-const searchSubmit = (event) => {
-    event.preventDefault();
-    search(event.target[0].value, event.target[1].value);
-}
-
-const searchInput = (event) => {
-    const responseText = document.getElementById("response");
-    responseText.innerHTML = "";
-
-    if (event.key === "Enter") {
-        const parent = event.target.parentElement;
-        search(parent[0].value, event.target.value)
-    }
-}
-
-const cleanResults = () => {
-    const tableRes = document.getElementById("response-table");
-    tableRes.innerHTML = "";
-}
 
 const search = async (filter, input) => {
     const filterClean = filter.toLowerCase().trim();
     const inputClean = input.toLowerCase().trim();
-    const res = await fetch(`./api/books.php?query=${filterClean}&search=${inputClean}`);
-    const data = await res.json();
+    const data = searchAdapter(filterClean, inputClean)
+    resultCache = data;
+    lastFilter = filterClean;
+    lastInput = inputClean;
 
     if (!res.ok) {
         const responseText = document.getElementById("response");
@@ -85,14 +57,109 @@ const search = async (filter, input) => {
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id="table-body">
+        <tbody id="table-body-res">
         </tbody>
     </table>
     `;
 
-    const tbody = document.getElementById("table-body");
+    const tbody = document.getElementById("table-body-res");
+    fillTable(data, tbody)
+};
 
-    data.forEach(value => {
+const sortList = (arr = listCache) => {
+    const tableList = document.getElementById("table-body");
+    tableList.innerHTML = ""
+    const sort = document.getElementById("select-list").value;
+    const checkbox = document.getElementById("order-list").checked;
+
+    const list = sorter(arr, sort, checkbox)
+    fillTable(list, tableList);
+}
+
+const sortResult = (arr = resultCache) => {
+    const tableList = document.getElementById("table-body-res");
+    tableList.innerHTML = ""  
+    const sort = document.getElementById("select-list-res").value;
+    const checkbox = document.getElementById("order-list-res").checked;
+    fillTable(arr, tableList, sort, checkbox.checked);
+}
+
+const sorter = (arr, sort, descend) => {
+    switch (sort) {
+        case "title":
+            arr.sort((a, b) => {
+                const sa = a.title.toLowerCase(), sb = b.title.toLowerCase();
+                if (sa < sb) {
+                    return -1
+                }
+                if (sa > sb) {
+                    return 1
+                }
+                return 0
+            });
+            break;
+        case "author":
+            arr.sort((a, b) => {
+                const sa = a.author.toLowerCase(), sb = b.author.toLowerCase();
+                if (sa < sb) {
+                    return -1
+                }
+                if (sa > sb) {
+                    return 1
+                }
+                return 0
+            });
+            break;
+        case "pages":
+            arr.sort((a, b) => {
+                return a.pages - b.pages;
+            });
+            break;
+        case "genre":
+            arr.sort((a, b) => {
+                const sa = a.genre.toLowerCase(), sb = b.genre.toLowerCase();
+                if (sa < sb) {
+                    return -1
+                }
+                if (sa > sb) {
+                    return 1
+                }
+                return 0
+            });
+            break;
+        case "year":
+            arr.sort((a, b) => {
+                return a.year - b.year;
+            });
+            break;
+        case "status":
+            arr.sort((a, b) => {
+                const sa = a.status.toLowerCase(), sb = b.status.toLowerCase();
+                if (sa < sb) {
+                    return -1
+                }
+                if (sa > sb) {
+                    return 1
+                }
+                return 0
+            });
+            break;
+        default:
+            arr.sort((a, b) => {
+                return a.id - b.id;
+            });
+            break;
+    }
+
+    if (descend) {
+        arr.reverse();
+    }
+
+    return arr;
+}
+
+const fillTable = async (arr, target) => {
+    arr.forEach(value => {
         let action = "N/A";
 
         if (value.status === "available") {
@@ -112,10 +179,32 @@ const search = async (filter, input) => {
             <td>
                 ${action}
             </td>
-        `
-        tbody.appendChild(tr)
+            `
+        target.appendChild(tr)
     });
-};
+}
+
+getAll();
+
+const searchSubmit = (event) => {
+    event.preventDefault();
+    search(event.target[0].value, event.target[1].value);
+}
+
+const searchInput = (event) => {
+    const responseText = document.getElementById("response");
+    responseText.innerHTML = "";
+
+    /*if (event.key === "Enter") {
+        const parent = event.target.parentElement;
+        search(parent[0].value, event.target.value)
+    } */
+}
+
+const cleanResults = () => {
+    const tableRes = document.getElementById("response-table");
+    tableRes.innerHTML = "";
+}
 
 let listStatus = true;
 const listToggler = (event) => {
