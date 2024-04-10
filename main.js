@@ -25,12 +25,12 @@ const getAll = async () => {
 const search = async (filter, input) => {
     const filterClean = filter.toLowerCase().trim();
     const inputClean = input.toLowerCase().trim();
-    const data = searchAdapter(filterClean, inputClean)
+    const data = await searchAdapter(filterClean, inputClean)
     resultCache = data;
     lastFilter = filterClean;
     lastInput = inputClean;
 
-    if (!res.ok) {
+    if (data.not_found) {
         const responseText = document.getElementById("response");
         responseText.innerHTML = `We do not have a book with the <span>${input}</span> <span>${filter}</span>`;
         const tableRes = document.getElementById("response-table");
@@ -40,9 +40,25 @@ const search = async (filter, input) => {
 
     const tableRes = document.getElementById("response-table");
     tableRes.innerHTML = `
-    <div>
-        <h1 class="d-inline align-middle">Results</h1>
-        <button class="align-text-top ms-3" type="button" onclick="cleanResults()">Clean</button>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="d-inline align-middle">Results</h1>
+            <button class="align-text-top ms-3" type="button" onclick="cleanResults()">Clean</button>
+        </div>
+        <div>
+            <span>Sort:</span>
+            <select class="form-select d-inline w-auto" id="select-list-res" aria-label="Select sort" onchange="sortResult()">
+                <option value="id">ID</option>
+                <option selected value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="pages">Pages</option>
+                <option value="genre">Genre</option>
+                <option value="year">Year</option>
+                <option value="status">Status</option>
+            </select>
+            <label for="order-list-res">Descending</label>
+            <input type="checkbox" name="order" id="order-list-res" onchange="sortResult()">
+        </div>
     </div>
     <table class="table table-sm table-bordered table-hover">
         <thead>
@@ -63,7 +79,7 @@ const search = async (filter, input) => {
     `;
 
     const tbody = document.getElementById("table-body-res");
-    fillTable(data, tbody)
+    sortResult(data, tbody)
 };
 
 const sortList = (arr = listCache) => {
@@ -78,10 +94,12 @@ const sortList = (arr = listCache) => {
 
 const sortResult = (arr = resultCache) => {
     const tableList = document.getElementById("table-body-res");
-    tableList.innerHTML = ""  
+    tableList.innerHTML = ""
     const sort = document.getElementById("select-list-res").value;
     const checkbox = document.getElementById("order-list-res").checked;
-    fillTable(arr, tableList, sort, checkbox.checked);
+
+    const list = sorter(arr, sort, checkbox)
+    fillTable(list, tableList);
 }
 
 const sorter = (arr, sort, descend) => {

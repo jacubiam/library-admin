@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
             } else {
                 header('Content-type: application/json');
                 http_response_code(404);
-                echo json_encode(array("res" => "$search not found"));
+                echo json_encode(array("not_found" => "$search not found"));
             }
         }
     }
