@@ -1,0 +1,11 @@
+.id-loan {
+    max-width: 50px;
+    text-align: center;
+}
+
+
+@media screen and (min-width:640px){
+    .title-loan {
+        width: 250px;
+    } 
+}

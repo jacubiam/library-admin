@@ -1,3 +1,9 @@
+let validateMain;
+const importer = async () => {
+    const { validate } = await import("./scripts/mainValidator.js");
+    validateMain = validate;
+}
+
 let listCache = undefined;
 let resultCache = undefined;
 let lastFilter = undefined;
@@ -13,6 +19,26 @@ const searchAdapter = async (filter, input) => {
     const res = await fetch(`./api/books.php?query=${filter}&search=${input}`);
     const data = await res.json();
     return data;
+}
+
+const loanAdapter = async (id, user) => {
+    const data = {
+        id: id,
+        user_name: user,
+    }
+
+    const res = await fetch("./api/reservations.php", {
+        method: "POST",
+        headers: "Content-type: application/json",
+        body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+        throw new Error("Book not Available for loan")
+    }
+
+    const resJS = await res.json();
+    return resJS;
 }
 
 const getAll = async () => {
@@ -81,6 +107,39 @@ const search = async (filter, input) => {
     const tbody = document.getElementById("table-body-res");
     sortResult(data, tbody)
 };
+
+const loanBook = async (event) => {
+    event.preventDefault();
+    const idBook = event.target[0].value.trim();
+    const userName = event.target[2].value.trim();
+
+    const validation = validateMain(idBook, userName);
+    if (!validation.state) {
+        const response = document.getElementById("response");
+        response.innerHTML = validation.message;
+        setTimeout(() => {
+            response.innerHTML = "";
+        }, 5000);
+
+        return false;
+    }
+
+    const data = await loanAdapter(idBook, userName);
+    const response = document.getElementById("response");
+    if (!data) {
+        response.innerHTML = "Book not Available for loan";
+        setTimeout(() => {
+            response.innerHTML = "";
+        }, 3000);
+
+        return false;
+    }
+
+    response.innerHTML = `${data.title} lent!`;
+    setTimeout(() => {
+        response.innerHTML = "";
+    }, 3000);
+}
 
 const sortList = (arr = listCache) => {
     const tableList = document.getElementById("table-body");
@@ -181,7 +240,7 @@ const fillTable = async (arr, target) => {
         let action = "N/A";
 
         if (value.status === "available") {
-            action = "<button type='button' onclick='borrow(event)'>Borrow</button>"
+            action = "<button type='button' onclick='loan(event)'>Loan</button>"
         }
 
         const tr = document.createElement("tr");
@@ -200,6 +259,44 @@ const fillTable = async (arr, target) => {
             `
         target.appendChild(tr)
     });
+}
+
+const loan = (event) => {
+    const parentRow = event.target.parentElement.parentElement;
+    const rowId = parentRow.children[0].innerHTML;
+    const title = parentRow.children[1].innerHTML;
+
+    const mainForm = document.getElementById("main-form");
+    mainForm.innerHTML = `
+    <h1>Loan Form</h1>
+    <form id="loan-form" method="post" onsubmit="loanBook(event)">
+        <span>Book:</span>
+        <input class="id-loan" type="text" name="id" placeholder="ID" required readonly disabled value="${rowId}">
+        <input class="title-loan" type="text" name="title" placeholder="title" required readonly disabled value="${title}">
+        <div class="my-3">
+            <label for="user_name">Your Name</label>
+            <input id="user-name" type="text" name="user_name" required>
+        </div>
+        <button type="submit">Loan Book</button>
+        <button type="button" onclick="cancelLoan(event)">Cancel</button>
+    </form>
+    `;
+}
+
+const cancelLoan = () => {
+    const mainForm = document.getElementById("main-form");
+    mainForm.innerHTML = `
+    <h1>Book Searching</h1>
+    <form id="search-form" method="post" onsubmit="searchSubmit(event)">
+        <select class="form-select d-inline w-auto" aria-label="Default select example">
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="genre">Genre</option>
+            <option value="year">Year</option>
+        </select>
+        <input type="text" name="search" placeholder="Search" onkeydown="searchInput(event)" required>
+    </form>
+    `;
 }
 
 getAll();
