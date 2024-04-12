@@ -3,23 +3,25 @@ spl_autoload_register(function ($class_name) {
     include "../services/" . strtolower($class_name) . '.services.php';
 });
 
+$url = "../db/books.csv";
+
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
     if (isset($_GET['query'])) {
         if ($_GET['query'] === "get_all") {
-            $books = Book::get_all();
+            $books = Book::get_all($url);
             sort($books);
             header('Content-type: application/json');
             echo json_encode($books);
         }
 
         if ($_GET['query'] === "get_book") {
-            $get_book = Book::get_book($_GET['id']);
+            $get_book = Book::get_item($_GET['id'], $url);
             header('Content-type: application/json');
             echo json_encode($get_book);
         }
 
         if (isset($_GET['search'])) {
-            $books = Book::get_all();
+            $books = Book::get_all($url);
             $search = $_GET['search'];
             $books_filtered = array_filter($books, function ($book) use ($search) {
                 return (strtolower($book[$_GET['query']]) === strtolower($search));
@@ -43,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $post_data = json_decode($raw_data, true);
 
     $new_book = new Book($post_data);
-    $new_book->create_book();
+    $new_book->create_item();
 
     header('Content-type: application/json');
     echo json_encode($post_data);
@@ -53,8 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === "PUT") {
     $raw_data = file_get_contents('php://input');
     $put_data = json_decode($raw_data, true);
 
-    $get_book = Book::get_book($put_data['id']);
-    $get_book->edit_book($put_data);
+    $get_book = Book::get_item($put_data['id'], $url);
+    $get_book->edit_item($put_data);
     header('Content-type: application/json');
     echo json_encode($put_data);
 }
@@ -62,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === "PUT") {
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
     $param = str_contains($_SERVER['REQUEST_URI'], '?id=');
     if ($param) {
-        $url = explode('?id=', $_SERVER['REQUEST_URI']);
-        $id = end($url);
+        $uri = explode('?id=', $_SERVER['REQUEST_URI']);
+        $id = end($uri);
 
-        $del_book = Book::get_book($id);
-        $del_book->delete_book($id);
+        $del_book = Book::get_item($id, $url);
+        $del_book->delete_item();
         http_response_code(204);
     } else {
         http_response_code(400);

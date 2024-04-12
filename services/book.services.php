@@ -1,7 +1,7 @@
 <?php
-class Book implements JsonSerializable
+include "../services/adapter.php";
+class Book extends Adapter implements JsonSerializable
 {
-    private $id;
     private $title;
     private $author;
     private $pages;
@@ -11,9 +11,10 @@ class Book implements JsonSerializable
 
     public function __construct(...$args)
     {
+        $this->url = "../db/books.csv";
         $fields = $args[0];
         if (!isset($fields['id'])) {
-            $all_ids = array_column($this->get_all(), 'id');
+            $all_ids = array_column($this->get_all($this->url), 'id');
             $repeated = false;
             do {
                 $id = random_int(1, 9999);
@@ -37,28 +38,26 @@ class Book implements JsonSerializable
         $this->year = $fields['year'];
         $this->status = $fields['status'];
     }
- 
-    public function jsonSerialize() {
-        return get_object_vars($this);
-    }
-    public function create_book()
+
+    public function jsonSerialize()
     {
-        $url = "../db/books.csv";
-        $data = [
-            $this->id,
-            $this->title,
-            $this->author,
-            $this->pages,
-            $this->genre,
-            $this->year,
-            $this->status,
-        ];
+        $data = get_object_vars($this);
+        unset($data['url']);
+        return $data;
+    }
+
+    public function create_item()
+    {
+        $url = $this->url;
+        $data = $data = get_object_vars($this);
+        unset($data['url']);
+        $data = array_values($data);
         $handle = fopen($url, 'a');
         fputcsv($handle, $data);
         fclose($handle);
     }
-    
-    public static function get_all()
+
+    /*  public static function get_all()
     {
         $url = "../db/books.csv";
         $header = null;
@@ -74,9 +73,9 @@ class Book implements JsonSerializable
             fclose($handle);
         }
         return $data;
-    }
+    } */
 
-    public static function get_all_indexed()
+    /*  public static function get_all_indexed()
     {
         $url = "../db/books.csv";
         $data = [];
@@ -87,9 +86,9 @@ class Book implements JsonSerializable
             fclose($handle);
         }
         return $data;
-    }
+    } */
 
-    public static function get_book($id)
+    /* public static function get_book($id)
     {
         $data = Book::get_all();
         $book_filtered = array_filter($data, function ($item) use ($id) {
@@ -99,9 +98,9 @@ class Book implements JsonSerializable
         $book_filtered = array_slice($book_filtered, 0);
         $book_object = new Book($book_filtered[0]);
         return $book_object;
-    }
+    } */
 
-    public function edit_book(...$args){
+    /* public function edit_book(...$args){
         $url = "../db/books.csv";
         $update = $args[0];
         $id = $update['id'];
@@ -118,9 +117,9 @@ class Book implements JsonSerializable
             fputcsv($handle, $value);
         }
         fclose($handle);
-    }
+    } */
 
-    public function delete_book($id)
+    /* public function delete_book($id)
     {
         $url = "../db/books.csv";
         $data = Book::get_all_indexed();
@@ -136,5 +135,5 @@ class Book implements JsonSerializable
             fputcsv($handle, $value);
         }
         fclose($handle);
-    }
+    } */
 }
