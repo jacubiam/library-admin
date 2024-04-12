@@ -42,8 +42,17 @@ abstract class Adapter
         });
 
         $item_filtered = array_slice($item_filtered, 0);
-        $item_object = new Book($item_filtered[0]);
-        return $item_object;
+
+        if (str_contains($url, "books")) {
+            $item_object = new Book($item_filtered[0]);
+            return $item_object;
+        }
+
+        if (str_contains($url, "reservations")) {
+            $item = $item_filtered[0];
+            $item_object = new Reservation($item['id'], $item['user_name']);
+            return $item_object;
+        }  
     }
 
     public function edit_item(...$args)

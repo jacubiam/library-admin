@@ -1,5 +1,5 @@
 <?php
-include "../services/adapter.php";
+include_once "../services/adapter.php";
 class Book extends Adapter implements JsonSerializable
 {
     private $title;
@@ -57,83 +57,14 @@ class Book extends Adapter implements JsonSerializable
         fclose($handle);
     }
 
-    /*  public static function get_all()
-    {
-        $url = "../db/books.csv";
-        $header = null;
-        $data = [];
-        if (($handle = fopen($url, 'r')) !== false) {
-            while (($row = fgetcsv($handle)) !== false) {
-                if ($header === null) {
-                    $header = $row;
-                } else {
-                    $data[] = array_combine($header, $row);
-                }
-            }
-            fclose($handle);
-        }
-        return $data;
-    } */
+    public function get_status(){
+        return $this->status;
+    }
 
-    /*  public static function get_all_indexed()
-    {
-        $url = "../db/books.csv";
-        $data = [];
-        if (($handle = fopen($url, 'r')) !== false) {
-            while (($row = fgetcsv($handle)) !== false) {
-                $data[] = $row;
-            }
-            fclose($handle);
-        }
-        return $data;
-    } */
-
-    /* public static function get_book($id)
-    {
-        $data = Book::get_all();
-        $book_filtered = array_filter($data, function ($item) use ($id) {
-            return ($item['id'] === $id);
-        });
-
-        $book_filtered = array_slice($book_filtered, 0);
-        $book_object = new Book($book_filtered[0]);
-        return $book_object;
-    } */
-
-    /* public function edit_book(...$args){
-        $url = "../db/books.csv";
-        $update = $args[0];
-        $id = $update['id'];
-        $data = Book::get_all_indexed();
-        $book_filtered = array_filter($data, function ($item) use ($id) {
-            return ($item[0] === $id);
-        });
-        $index = array_keys($book_filtered);
-
-        $data[$index[0]] = $update;
-
-        $handle = fopen($url, 'w');
-        foreach ($data as $value) {
-            fputcsv($handle, $value);
-        }
-        fclose($handle);
-    } */
-
-    /* public function delete_book($id)
-    {
-        $url = "../db/books.csv";
-        $data = Book::get_all_indexed();
-        $book_filtered = array_filter($data, function ($item) use ($id) {
-            return ($item[0] === $id);
-        });
-        $index = array_keys($book_filtered);
-        
-        unset($data[$index[0]]);
-
-        $handle = fopen($url, 'w');
-        foreach ($data as $value) {
-            fputcsv($handle, $value);
-        }
-        fclose($handle);
-    } */
+    public function set_status($status){
+        $this->status = $status;
+        $data = get_object_vars($this);
+        unset($data['url']);
+        $this->edit_item($data);
+    }
 }
