@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     if ($book->get_status() === "available") {
         $new_reserv = new Reservation($id_book, $user_name);
-        $new_reserv->create_item(); 
+        $new_reserv->create_item();
         $book->set_status("unavailable");
         header('Content-type: application/json');
-        echo json_encode(array("res" => "Book ($id_book) lent!"));
+        echo json_encode(array("res" => "($id_book) lent!"));
     } else {
         http_response_code(403);
         header('Content-type: application/json');
@@ -32,21 +32,27 @@ if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
     $param_user = str_contains($_SERVER['REQUEST_URI'], '&user_name=');
 
     if ($param_id && $param_user) {
-        $query_uri = explode('?', $_SERVER['REQUEST_URI']);
+        $filtered_uri = urldecode($_SERVER['REQUEST_URI']);
+        $query_uri = explode('?', $filtered_uri);
         $query_uri = end($query_uri);
         $query = explode('&user_name=', $query_uri);
         $user_name = end($query);
         $query_id = $query[0];
         $query_id = explode("=", $query_id);
         $id = end($query_id);
-
         //Try
         $del_reserv = Reservation::get_item($id, $urlReserv);
-
-        $del_reserv->delete_item();
-        $retrieve = Book::get_item($id, $urlBook);
-        $retrieve->set_status("available");
-        http_response_code(204);
+        
+        if ($del_reserv->get_id() == $id && $del_reserv->get_user_name() == $user_name) {
+            $del_reserv->delete_item();
+            $retrieve = Book::get_item($id, $urlBook);
+            $retrieve->set_status("available");
+            http_response_code(204);
+        } else {
+            http_response_code(403);
+            header('Content-type: application/json');
+            echo json_encode(array("res" => "Incorrect ID or username"));
+        }
     } else {
         http_response_code(400);
         header('Content-type: application/json');

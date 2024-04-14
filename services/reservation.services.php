@@ -28,4 +28,14 @@ class Reservation extends Adapter implements JsonSerializable
         fputcsv($handle, $data);
         fclose($handle);
     }
+
+    public function get_id()
+    {
+        return $this->id;
+    }
+
+    public function get_user_name()
+    {
+        return $this->user_name;
+    }
 }

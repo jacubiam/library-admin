@@ -29,7 +29,9 @@ const loanAdapter = async (id, user) => {
 
     const res = await fetch("./api/reservations.php", {
         method: "POST",
-        headers: "Content-type: application/json",
+        headers: {
+            "Content-type": "application/json",
+        },
         body: JSON.stringify(data)
     });
 
@@ -39,6 +41,21 @@ const loanAdapter = async (id, user) => {
 
     const resJS = await res.json();
     return resJS;
+}
+
+const returnBookAdapter = async (id, userName) => {
+    const res = await fetch(`./api/reservations.php?id=${id}&user_name=${userName}`, {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json",
+        },
+    });
+
+    if (!res.ok) {
+        return false;
+    }
+
+    return true;
 }
 
 const getAll = async () => {
@@ -114,8 +131,8 @@ const loanBook = async (event) => {
     const userName = event.target[2].value.trim();
 
     const validation = validateMain(idBook, userName);
+    const response = document.getElementById("response");
     if (!validation.state) {
-        const response = document.getElementById("response");
         response.innerHTML = validation.message;
         setTimeout(() => {
             response.innerHTML = "";
@@ -125,7 +142,6 @@ const loanBook = async (event) => {
     }
 
     const data = await loanAdapter(idBook, userName);
-    const response = document.getElementById("response");
     if (!data) {
         response.innerHTML = "Book not Available for loan";
         setTimeout(() => {
@@ -135,10 +151,51 @@ const loanBook = async (event) => {
         return false;
     }
 
-    response.innerHTML = `${data.title} lent!`;
+    response.innerHTML = `Book ${data.res}`;
     setTimeout(() => {
         response.innerHTML = "";
     }, 3000);
+
+    getAll();
+    if (lastFilter && lastInput) {
+        search(lastFilter, lastInput);
+    }
+}
+
+const returnBook = async (event) => {
+    event.preventDefault();
+    const id = event.target[0].value;
+    const userName = event.target[1].value;
+    const validation = validateMain(id, userName);
+    const response = document.getElementById("response");
+    if (!validation.state) {
+        response.innerHTML = validation.message;
+        setTimeout(() => {
+            response.innerHTML = "";
+        }, 5000);
+
+        return false;
+    }
+
+    const isReturned = await returnBookAdapter(id, userName);
+
+    if (!isReturned) {
+        response.innerHTML = "Sorry, you have an incorrect ID or username";
+        setTimeout(() => {
+            response.innerHTML = "";
+        }, 5000);
+        return false;
+    }
+
+    response.innerHTML = `${id} returned`;
+    setTimeout(() => {
+        response.innerHTML = "";
+    }, 3000);
+
+    getAll();
+    if (lastFilter && lastInput) {
+        search(lastFilter, lastInput);
+    }
 }
 
 const sortList = (arr = listCache) => {
@@ -274,7 +331,7 @@ const loan = (event) => {
         <input class="id-loan" type="text" name="id" placeholder="ID" required readonly disabled value="${rowId}">
         <input class="title-loan" type="text" name="title" placeholder="title" required readonly disabled value="${title}">
         <div class="my-3">
-            <label for="user_name">Your Name</label>
+            <label for="user_name">Your Name:</label>
             <input id="user-name" type="text" name="user_name" required>
         </div>
         <button type="submit">Loan Book</button>
@@ -288,7 +345,7 @@ const cancelLoan = () => {
     mainForm.innerHTML = `
     <h1>Book Searching</h1>
     <form id="search-form" method="post" onsubmit="searchSubmit(event)">
-        <select class="form-select d-inline w-auto" aria-label="Default select example">
+        <select class="form-select d-inline w-auto" aria-label="Filter Select">
             <option value="title">Title</option>
             <option value="author">Author</option>
             <option value="genre">Genre</option>
@@ -300,6 +357,7 @@ const cancelLoan = () => {
 }
 
 getAll();
+importer();
 
 const searchSubmit = (event) => {
     event.preventDefault();
@@ -332,4 +390,21 @@ const listToggler = (event) => {
         button.innerHTML = "Hide Book List";
     }
     listStatus = !listStatus;
+}
+
+const returnForm = () => {
+    const mainForm = document.getElementById("main-form");
+    mainForm.innerHTML = `
+    <h1>Return Form</h1>
+    <form id="return-form" method="get" onsubmit="returnBook(event)">
+        <label class="main-label" for="book-id">Book ID:</label>
+        <input class="id-return" id="book-id" type="number" name="id" placeholder="ID" min="1" max="9999" required>
+        <div class="my-3">
+            <label class="main-label" for="user-name">Your Name:</label>
+            <input id="user-name" type="text" name="user_name" placeholder="User Name" required>
+        </div>
+        <button type="submit">Return Book</button>
+        <button type="button" onclick="cancelLoan(event)">Cancel</button>
+    </form>
+    `;
 }

@@ -11,11 +11,12 @@
 </head>
 
 <body>
+    <button type="button" onclick="returnForm()">Return Book</button>
     <a href="./pages/admin.html" target="_self">Books Management</a>
     <section id="main-form">
         <h1>Book Searching</h1>
         <form id="search-form" method="post" onsubmit="searchSubmit(event)">
-            <select class="form-select d-inline w-auto" aria-label="Default select example">
+            <select class="form-select d-inline w-auto" aria-label="Filter Select">
                 <option value="title">Title</option>
                 <option value="author">Author</option>
                 <option value="genre">Genre</option>

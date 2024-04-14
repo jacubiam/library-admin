@@ -3,6 +3,15 @@
     text-align: center;
 }
 
+.id-return {
+    max-width: 60px;
+    text-align: center;
+}
+
+.main-label {
+    width: 82px;
+}
+
 
 @media screen and (min-width:640px){
     .title-loan {
