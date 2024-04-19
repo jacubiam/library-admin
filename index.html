@@ -45,7 +45,7 @@
             </div>
             <div>
                 <span>Sort:</span>
-                <select class="form-select d-inline w-auto" id="select-list" aria-label="Select sort" onchange="sortList()">
+                <select class="form-select d-inline w-auto" id="select-list" aria-label="Select sort" onchange="sortListMain()">
                     <option value="id">ID</option>
                     <option selected value="title">Title</option>
                     <option value="author">Author</option>
@@ -55,7 +55,7 @@
                     <option value="status">Status</option>
                 </select>
                 <label for="order-list">Descending</label>
-                <input type="checkbox" name="order" id="order-list" onchange="sortList()">
+                <input type="checkbox" name="order" id="order-list" onchange="sortListMain()">
             </div>
         </div>
         <table id="collapse-table" class="collapse show table table-sm table-bordered table-hover">
