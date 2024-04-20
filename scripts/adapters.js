@@ -1,11 +1,19 @@
-export const getAllBooks = async () => {
-    const res = await fetch("./api/books.php?query=get_all");
+export const getAllBooks = async (url) => {
+    //Param url is used for local development, once the API is hosted can be removed
+    const res = await fetch(url);
     const data = await res.json();
     return data;
 }
 
-export const searchBook = async (filter, input) => {
-    const res = await fetch(`./api/books.php?query=${filter}&search=${input}`);
+export const searchBook = async (filter, input, context) => {
+    //Context is used for local development, once the API is hosted can be removed
+    let url;
+    if (context === "main") {
+        url = `./api/books.php?query=${filter}&search=${input}`;
+    } else {
+        url = `../api/books.php?query=${filter}&search=${input}`;
+    }
+    const res = await fetch(url);
     const data = await res.json();
     return data;
 }
@@ -88,7 +96,7 @@ export const editBook = async (arr) => {
 }
 
 export const deleteBook = async (id) => {
-    const res = await fetch(`../api/books.php?id=${rowId}`, {
+    const res = await fetch(`../api/books.php?id=${id}`, {
         method: 'DELETE',
         headers: {
             'Content-type': 'application/json',

@@ -10,21 +10,37 @@ export const searchBookMain = async (filter = lastFilter, input = lastInput) => 
         return false;
     }
     
-    const data = await searchPerform(filter, input)
+    const data = await searchPerform(filter, input, "main")
     if (!data) {
         return false;
     }
 
-    tableResult();
+    tableResult("main");
 
     const values = sortResult(data);
     fillTable(values.array, values.target, "main")
 }
 
-const searchPerform = async (filter, input) => {
+export const searchBookAdmin = async (filter = lastFilter, input = lastInput) => { 
+    if (!filter || !input) {
+        return false;
+    }
+    
+    const data = await searchPerform(filter, input, "admin");
+    if (!data) {
+        return false;
+    }
+
+    tableResult("admin");
+
+    const values = sortResult(data);
+    fillTable(values.array, values.target, "admin");
+}
+
+const searchPerform = async (filter, input, context) => {
     const filterClean = filter.toLowerCase().trim();
     const inputClean = input.toLowerCase().trim();
-    const data = await searchBook(filterClean, inputClean)
+    const data = await searchBook(filterClean, inputClean, context)
     resultCache = data;
     lastFilter = filterClean;
     lastInput = inputClean;
@@ -40,7 +56,14 @@ const searchPerform = async (filter, input) => {
     return data;
 }
 
-const tableResult =  () => {
+const tableResult =  (context) => {
+    let sorter;
+    if (context === "main") {
+        sorter = "sortResultMain()";
+    } else {
+        sorter = "sortResultAdmin()";
+    }
+
     const tableRes = document.getElementById("response-table");
     tableRes.innerHTML = `
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -50,7 +73,7 @@ const tableResult =  () => {
         </div>
         <div>
             <span>Sort:</span>
-            <select class="form-select d-inline w-auto" id="select-list-res" aria-label="Select sort" onchange="sortResultMain()">
+            <select class="form-select d-inline w-auto" id="select-list-res" aria-label="Select sort" onchange=${sorter}>
                 <option value="id">ID</option>
                 <option selected value="title">Title</option>
                 <option value="author">Author</option>
@@ -60,7 +83,7 @@ const tableResult =  () => {
                 <option value="status">Status</option>
             </select>
             <label for="order-list-res">Descending</label>
-            <input type="checkbox" name="order" id="order-list-res" onchange="sortResultMain()">
+            <input type="checkbox" name="order" id="order-list-res" onchange=${sorter}>
         </div>
     </div>
     <table class="table table-sm table-bordered table-hover">

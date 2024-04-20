@@ -11,8 +11,10 @@
 </head>
 
 <body>
+    <button type="button" onclick="searchForm()">Search Book</button>
+    <a href="../" target="_self">Home</a>
     <section id="main-form">
-        <form id="create-book-form" method="post" onsubmit="createBookAdapter(event)">
+        <form id="create-book-form" method="post" onsubmit="createBook(event)">
             <h1>Add Book</h1>
             <input class="d-block" type="text" name="title" placeholder="Title" required>
             <input class="d-block" type="text" name="author" placeholder="Autor" required>
@@ -26,12 +28,40 @@
             <button class="d-block" type="submit">Add book</button>
         </form>
     </section>
+
     <article>
         <span id="response"></span>
     </article>
-    <section>
-        <h1>Book List</h1>
-        <table class="table table-sm table-bordered table-hover">
+    <section class="overflow-x-auto my-5" id="response-table">
+
+    </section>
+
+    <section class="overflow-x-auto">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="d-inline align-middle">Book List</h1>
+                <button class="btn btn-primary align-text-top ms-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-table" aria-expanded="true" aria-controls="collapse-table"
+                    onclick="listToggler(event)">
+                    Hide Book List
+                </button>
+            </div>
+            <div>
+                <span>Sort:</span>
+                <select class="form-select d-inline w-auto" id="select-list" aria-label="Select sort" onchange="sortListAdmin()">
+                    <option value="id">ID</option>
+                    <option selected value="title">Title</option>
+                    <option value="author">Author</option>
+                    <option value="pages">Pages</option>
+                    <option value="genre">Genre</option>
+                    <option value="year">Year</option>
+                    <option value="status">Status</option>
+                </select>
+                <label for="order-list">Descending</label>
+                <input type="checkbox" name="order" id="order-list" onchange="sortListAdmin()">
+            </div>
+        </div>
+        <table id="collapse-table" class="collapse show table table-sm table-bordered table-hover">
             <thead>
                 <tr>
                     <th>ID</th>

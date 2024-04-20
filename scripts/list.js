@@ -3,15 +3,19 @@ import { sorter, fillTable } from "./utils.js";
 let listCache = undefined;
 
 export const getAllMain = async () => {
-    const data = await getAllBooks();
+    const data = await getAllBooks("./api/books.php?query=get_all");
     listCache = data;
 
     const values = sortList(data);
-    fillTable(values.array, values.target, "main")
+    fillTable(values.array, values.target, "main");
 }
 
 export const getAllAdmin = async () => {
+    const data = await getAllBooks("../api/books.php?query=get_all");
+    listCache = data;
 
+    const values = sortList(data);
+    fillTable(values.array, values.target, "admin");
 }
 
 export const getAllReserv = async () => {

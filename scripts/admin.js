@@ -1,8 +1,33 @@
-import { validate } from "./adminValidator.js";
+let validateAdmin;
+let getAll, sortBookList;
+let search, sortBookResult;
+let fillTableFunc;
+let createBookAdapter, getBookAdapter, editBookAdapter, deleteBookAdapter;
+let searchSubmit, searchInput, cleanResults, listToggler, searchForm;
+
+const importer = async () => {
+    const { validate } = await import("./adminValidator.js");
+    const { getAllAdmin, sortList } = await import("./list.js");
+    const { searchBookAdmin, sortResult } = await import("./search.js");
+    const { fillTable } = await import("./utils.js");
+    const { createBook, getBook, editBook, deleteBook } = await import("./adapters.js");
+    const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc } = await import("./commons.js");
+
+    validateAdmin = validate;
+    getAll = getAllAdmin, sortBookList = sortList;
+    search = searchBookAdmin, sortBookResult = sortResult;
+    fillTableFunc = fillTable;
+    createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook;
+    searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
+
+    getAllAdmin();
+}
+
+importer();
 
 let idHolder;
 
-export const createBook = async (event) => {
+const createBook = async (event) => {
     event.preventDefault();
     const arr = arrayCleaner(event, "createForm");
     if (!arr) {
@@ -13,32 +38,33 @@ export const createBook = async (event) => {
     resultPrint("create", dataRes.title);
 };
 
-export const editBook = async (event) => {
+const editBook = async (event) => {
     event.preventDefault();
     const arr = arrayCleaner(event, "editForm");
     if (!arr) {
         return false;
     }
-    
-    const dataRes = await editBookAdapater(arr);
+
+    const dataRes = await editBookAdapter(arr);
     resultPrint("edit", dataRes.title);
 };
 
-export const deleteBook = async (event) => {
+const deleteBook = async (event) => {
     event.preventDefault();
     const rowId = event.target.parentElement.parentElement.id;
-    const dataRes = editBookAdapater(rowId);
+    const dataRes = await deleteBookAdapter(rowId);
 
     if (dataRes) {
         //
         getAll();
+        search();
     } else {
         //
     }
 };
 
 const arrayCleaner = (event, type) => {
-    const validation = validate(event, type);
+    const validation = validateAdmin(event, type);
     if (!validation.state) {
         const response = document.getElementById("response");
         response.innerHTML = validation.message;
@@ -58,18 +84,18 @@ const arrayCleaner = (event, type) => {
         };
     };
 
-    const data = {
-        title: event.target[0].value.trim(),
-        author: event.target[1].value.trim(),
-        pages: event.target[2].value.trim(),
-        genre: event.target[3].value.trim(),
-        year: event.target[4].value.trim(),
-        status: selectedRadio.value.trim(),
-    };
+    let data = {};
 
-    if (type == "editForm") {
+    if (type === "editForm") {
         data.id = idHolder.trim();
     }
+
+    data.title = event.target[0].value.trim();
+    data.author = event.target[1].value.trim();
+    data.pages = event.target[2].value.trim();
+    data.genre = event.target[3].value.trim();
+    data.year = event.target[4].value.trim();
+    data.status = selectedRadio.value.trim();
 
     return data;
 }
@@ -89,9 +115,10 @@ const resultPrint = (type, title) => {
 
     defaultForm();
     getAll();
+    search();
 }
 
-export const edit = async (event) => {
+const edit = async (event) => {
     const rowId = event.target.parentElement.parentElement.id;
     const data = await getBookAdapter(rowId);
     idHolder = data.id;
@@ -109,7 +136,7 @@ export const edit = async (event) => {
 
     const editForm = document.createElement("form");
     editForm.id = "edit-book-form";
-    editForm.onsubmit = editBookAdapater;
+    editForm.onsubmit = editBook;
     editForm.innerHTML = `
         <h1>Edit Book</h1>
         <input class="d-block" type="text" name="title" placeholder="Title" required value="${data.title}">
@@ -135,7 +162,7 @@ const defaultForm = () => {
 
     const addForm = document.createElement("form");
     addForm.id = "create-book-form";
-    addForm.onsubmit = createBookAdapter;
+    addForm.onsubmit = createBook;
     addForm.innerHTML = `
         <h1>Add Book</h1>
         <input class="d-block" type="text" name="title" placeholder="Title" required>
@@ -160,3 +187,13 @@ const clearFields = (event) => {
         };
     };
 };
+
+const sortListAdmin = () => {
+    const values = sortBookList();
+    fillTableFunc(values.array, values.target, "admin");
+}
+
+const sortResultAdmin = () => {
+    const values = sortBookResult();
+    fillTableFunc(values.array, values.target, "admin");
+}

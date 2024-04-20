@@ -1,6 +1,7 @@
 let validateMain;
-let getAll, search, sortBookList, sortBookResult, fillTableMain;
+let getAll, search, sortBookList, sortBookResult, fillTableFunc;
 let loanAdapter, returnBookAdapter;
+let searchSubmit, searchInput, cleanResults, listToggler, searchForm;
 
 const importer = async () => {
     const { validate } = await import("./scripts/mainValidator.js");
@@ -8,12 +9,15 @@ const importer = async () => {
     const { searchBookMain, sortResult } = await import("./scripts/search.js");
     const { fillTable } = await import("./scripts/utils.js");
     const { loanBook, returnBook } = await import("./scripts/adapters.js");
-
+    const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc } = await import("./scripts/commons.js");
+    
     validateMain = validate; 
     getAll = getAllMain, sortBookList = sortList;
     search = searchBookMain, sortBookResult = sortResult; 
-    fillTableMain = fillTable;
+    fillTableFunc = fillTable;
     loanAdapter = loanBook, returnBookAdapter = returnBook;
+    searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults =  cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
+    
     getAllMain();
 }
 
@@ -90,12 +94,12 @@ const returnBook = async (event) => {
 
 const sortListMain = () => {
     const values =  sortBookList();
-    fillTableMain(values.array, values.target, "main");
+    fillTableFunc(values.array, values.target, "main");
 }
 
 const sortResultMain = () => {
     const values = sortBookResult();
-    fillTableMain(values.array, values.target, "main");
+    fillTableFunc(values.array, values.target, "main");
 }
 
 const loan = (event) => {
@@ -115,58 +119,9 @@ const loan = (event) => {
             <input id="user-name" type="text" name="user_name" required>
         </div>
         <button type="submit">Loan Book</button>
-        <button type="button" onclick="cancelLoan(event)">Cancel</button>
+        <button type="button" onclick="searchForm(event)">Cancel</button>
     </form>
     `;
-}
-
-const cancelLoan = () => {
-    const mainForm = document.getElementById("main-form");
-    mainForm.innerHTML = `
-    <h1>Book Searching</h1>
-    <form id="search-form" method="post" onsubmit="searchSubmit(event)">
-        <select class="form-select d-inline w-auto" aria-label="Filter Select">
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="genre">Genre</option>
-            <option value="year">Year</option>
-        </select>
-        <input type="text" name="search" placeholder="Search" onkeydown="searchInput(event)" required>
-    </form>
-    `;
-}
-
-const searchSubmit = (event) => {
-    event.preventDefault();
-    search(event.target[0].value, event.target[1].value);
-}
-
-const searchInput = (event) => {
-    const responseText = document.getElementById("response");
-    responseText.innerHTML = "";
-
-    /*if (event.key === "Enter") {
-        const parent = event.target.parentElement;
-        search(parent[0].value, event.target.value)
-    } */
-}
-
-const cleanResults = () => {
-    const tableRes = document.getElementById("response-table");
-    tableRes.innerHTML = "";
-}
-
-let listStatus = true;
-const listToggler = (event) => {
-    const button = event.target;
-    if (listStatus) {
-        setTimeout(() => {
-            button.innerHTML = "Show Book List";
-        }, 300)
-    } else {
-        button.innerHTML = "Hide Book List";
-    }
-    listStatus = !listStatus;
 }
 
 const returnForm = () => {
@@ -181,7 +136,7 @@ const returnForm = () => {
             <input id="user-name" type="text" name="user_name" placeholder="User Name" required>
         </div>
         <button type="submit">Return Book</button>
-        <button type="button" onclick="cancelLoan(event)">Cancel</button>
+        <button type="button" onclick="searchForm(event)">Cancel</button>
     </form>
     `;
 }
