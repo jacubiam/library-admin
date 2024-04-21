@@ -51,15 +51,22 @@ const editBook = async (event) => {
 
 const deleteBook = async (event) => {
     event.preventDefault();
-    const rowId = event.target.parentElement.parentElement.id;
+    const row = event.target.parentElement.parentElement;
+    const rowId = row.id;
     const dataRes = await deleteBookAdapter(rowId);
 
     if (dataRes) {
-        //
         getAll();
-        search();
+        const tableBody = row.parentElement; 
+        if (tableBody.id === "table-body-res") {
+            row.remove();
+            if (tableBody.childElementCount === 0) {
+                const tableRes = document.getElementById("response-table");
+                tableRes.innerHTML = "";
+            }
+        }
     } else {
-        //
+        //When Delete fails Do Something
     }
 };
 
@@ -115,7 +122,11 @@ const resultPrint = (type, title) => {
 
     defaultForm();
     getAll();
-    search();
+    
+    const tableRes = document.getElementById("table-body-res")
+    if (tableRes) {
+        search();   
+    }
 }
 
 const edit = async (event) => {
