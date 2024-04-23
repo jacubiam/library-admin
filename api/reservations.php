@@ -6,6 +6,15 @@ spl_autoload_register(function ($class_name) {
 $urlReserv = "../db/reservations.csv";
 $urlBook = "../db/books.csv";
 
+if ($_SERVER['REQUEST_METHOD'] === "GET") {
+    if ($_GET['query'] === "get_all") {
+        $reservs = Reservation::get_all($urlReserv);
+        sort($reservs);
+        header('Content-type: application/json');
+        echo json_encode($reservs);
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $raw_data = file_get_contents('php://input');
     $post_data = json_decode($raw_data, true);
@@ -15,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $book = Book::get_item($id_book, $urlBook);
 
     if ($book->get_status() === "available") {
-        $new_reserv = new Reservation($id_book, $user_name);
+        $new_reserv = new Reservation($id_book, $book->get_title(), $user_name);
         $new_reserv->create_item();
         $book->set_status("unavailable");
         header('Content-type: application/json');

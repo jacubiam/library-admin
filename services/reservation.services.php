@@ -4,10 +4,11 @@ class Reservation extends Adapter implements JsonSerializable
 {
     private $user_name;
 
-    public function __construct($id, $user_name)
+    public function __construct($id, $title, $user_name)
     {
         $this->url = "../db/reservations.csv";
         $this->id  = $id;
+        $this->title = $title;
         $this->user_name = $user_name;
     }
 

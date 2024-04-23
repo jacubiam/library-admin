@@ -2,7 +2,6 @@
 include_once "../services/adapter.php";
 class Book extends Adapter implements JsonSerializable
 {
-    private $title;
     private $author;
     private $pages;
     private $genre;
@@ -66,5 +65,9 @@ class Book extends Adapter implements JsonSerializable
         $data = get_object_vars($this);
         unset($data['url']);
         $this->edit_item($data);
+    }
+
+    public function get_title(){
+        return $this->title;
     }
 }

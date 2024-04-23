@@ -4,6 +4,7 @@ abstract class Adapter
 {
     protected $url;
     protected $id;
+    protected $title;
 
     public static function get_all($url)
     {
@@ -50,7 +51,7 @@ abstract class Adapter
 
         if (str_contains($url, "reservations")) {
             $item = $item_filtered[0];
-            $item_object = new Reservation($item['id'], $item['user_name']);
+            $item_object = new Reservation($item['id'], $item['title'], $item['user_name']);
             return $item_object;
         }  
     }
