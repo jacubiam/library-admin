@@ -1,26 +1,27 @@
 let validateAdmin;
-let getAll, sortBookList;
+let getAll, sortBookList, getAllReservations, sortBookReservations;
 let search, sortBookResult;
 let fillTableFunc;
-let createBookAdapter, getBookAdapter, editBookAdapter, deleteBookAdapter;
+let createBookAdapter, getBookAdapter, editBookAdapter, deleteBookAdapter, returnBookAdapter;
 let searchSubmit, searchInput, cleanResults, listToggler, searchForm;
 
 const importer = async () => {
     const { validate } = await import("./adminValidator.js");
-    const { getAllAdmin, sortList } = await import("./list.js");
+    const { getAllAdmin, getAllReserv, sortList, sortReserv } = await import("./list.js");
     const { searchBookAdmin, sortResult } = await import("./search.js");
     const { fillTable } = await import("./utils.js");
-    const { createBook, getBook, editBook, deleteBook } = await import("./adapters.js");
+    const { createBook, getBook, editBook, deleteBook, returnBook } = await import("./adapters.js");
     const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc } = await import("./commons.js");
 
     validateAdmin = validate;
-    getAll = getAllAdmin, sortBookList = sortList;
+    getAll = getAllAdmin, sortBookList = sortList, getAllReservations = getAllReserv, sortBookReservations = sortReserv;
     search = searchBookAdmin, sortBookResult = sortResult;
     fillTableFunc = fillTable;
     createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook;
     searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
 
     getAllAdmin();
+    getAllReserv();
 }
 
 importer();
@@ -69,6 +70,21 @@ const deleteBook = async (event) => {
         //When Delete fails Do Something
     }
 };
+
+const retrieveBook = async(event) => {
+    event.preventDefault();
+    const row = event.target.parentElement.parentElement;
+    const rowId = row.id;
+    const dataRes = await returnBookAdapter(rowId);
+
+    if (!dataRes) {
+        //Do something if the return fail
+        return false;
+    }
+
+    getAllReservations();
+
+}
 
 const arrayCleaner = (event, type) => {
     const validation = validateAdmin(event, type);
@@ -207,4 +223,9 @@ const sortListAdmin = () => {
 const sortResultAdmin = () => {
     const values = sortBookResult();
     fillTableFunc(values.array, values.target, "admin");
+}
+
+const sortListReserv = () => {
+    const values = sortBookReservations();
+    fillTableFunc(values.array, values.target, "reserv");
 }

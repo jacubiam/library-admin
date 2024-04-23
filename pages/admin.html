@@ -11,8 +11,11 @@
 </head>
 
 <body>
-    <button type="button" onclick="searchForm()">Search Book</button>
     <a href="../" target="_self">Home</a>
+    <button type="button" onclick="searchForm()">Search Book</button>
+    <a href="#reservation-table">Reservation List</a>
+
+
     <section id="main-form">
         <form id="create-book-form" method="post" onsubmit="createBook(event)">
             <h1>Add Book</h1>
@@ -32,6 +35,7 @@
     <article>
         <span id="response"></span>
     </article>
+
     <section class="overflow-x-auto my-5" id="response-table">
 
     </section>
@@ -75,6 +79,40 @@
                 </tr>
             </thead>
             <tbody id="table-body">
+            </tbody>
+        </table>
+    </section>
+
+    <section class="overflow-x-auto py-5" id="reservation-table">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h1 class="d-inline align-middle">Reservation List</h1>
+                <button class="btn btn-primary align-text-top ms-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-table-reserv" aria-expanded="true" aria-controls="collapse-table-reserv"
+                    onclick="listToggler(event)">
+                    Hide List
+                </button>
+            </div>
+            <div>
+                <span>Sort:</span>
+                <select class="form-select d-inline w-auto" id="select-list-reserv" aria-label="Select sort" onchange="sortListReserv()">
+                    <option value="id">Book ID</option>
+                    <option selected value="title">Title</option>
+                    <option selected value="user_name">User Name</option>
+                </select>
+                <label for="order-list-reserv">Descending</label>
+                <input type="checkbox" name="order" id="order-list-reserv" onchange="sortListReserv()">
+            </div>
+        </div>
+        <table id="collapse-table-reserv" class="collapse show table table-sm table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>User Name</th>
+                </tr>
+            </thead>
+            <tbody id="table-body-reserv">
             </tbody>
         </table>
     </section>

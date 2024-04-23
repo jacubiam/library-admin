@@ -58,6 +58,18 @@ export const sorter = (arr, sort, descend) => {
                 return 0
             });
             break;
+        case "user_name":
+            arr.sort((a, b) => {
+                const sa = a.status.toLowerCase(), sb = b.status.toLowerCase();
+                if (sa < sb) {
+                    return -1
+                }
+                if (sa > sb) {
+                    return 1
+                }
+                return 0
+            });
+            break;
         default:
             arr.sort((a, b) => {
                 return a.id - b.id;
@@ -88,6 +100,8 @@ export const fillTable = async (arr, target, context) => {
                     <button type='button' onclick='deleteBook(event)'>Delete</button>
                 `;
                 break;
+            case "reserv":
+                action = "<button type='button' onclick='retrieveBook(event)'>Retrieve</button>";
             default:
                 break;
         }

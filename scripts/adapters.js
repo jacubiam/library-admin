@@ -1,4 +1,4 @@
-export const getAllBooks = async (url) => {
+export const getAllData = async (url) => {
     //Param url is used for local development, once the API is hosted can be removed
     const res = await fetch(url);
     const data = await res.json();
