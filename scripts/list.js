@@ -20,7 +20,7 @@ export const getAllAdmin = async () => {
 }
 
 export const getAllReserv = async () => {
-    const data = await getAllData("../api/reservations.php");
+    const data = await getAllData("../api/reservations.php?query=get_all");
 
     if (data.length > 0) {
         reservCache = data;

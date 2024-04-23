@@ -40,8 +40,15 @@ export const loanBook = async (id, user) => {
     return resJS;
 }
 
-export const returnBook = async (id, userName) => {
-    const res = await fetch(`./api/reservations.php?id=${id}&user_name=${userName}`, {
+export const returnBook = async (id, userName, context) => {
+    //Context is used for local development, once the API is hosted can be removed
+    let url;
+    if (context === "main") {
+        url = `./api/reservations.php?id=${id}&user_name=${userName}`;
+    } else {
+        url = `../api/reservations.php?id=${id}&user_name=${userName}`;
+    }
+    const res = await fetch(url, {
         method: "DELETE",
         headers: {
             "Content-type": "application/json",

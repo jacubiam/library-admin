@@ -60,7 +60,7 @@ export const sorter = (arr, sort, descend) => {
             break;
         case "user_name":
             arr.sort((a, b) => {
-                const sa = a.status.toLowerCase(), sb = b.status.toLowerCase();
+                const sa = a.user_name.toLowerCase(), sb = b.user_name.toLowerCase();
                 if (sa < sb) {
                     return -1
                 }
@@ -108,19 +108,29 @@ export const fillTable = async (arr, target, context) => {
 
         const tr = document.createElement("tr");
         tr.id = value.id;
-        tr.innerHTML += `
+
+        if (!(context === "reserv")) {
+            tr.innerHTML += `
+                <td>${value.id}</td>
+                <td>${value.title}</td>
+                <td>${value.author}</td>
+                <td>${value.pages}</td>
+                <td>${value.genre}</td>
+                <td>${value.year}</td>
+                <td>${value.status}</td>
+                <td>
+                    ${action}
+                </td>
+                `;
+        } else {
+            tr.innerHTML += `
             <td>${value.id}</td>
             <td>${value.title}</td>
-            <td>${value.author}</td>
-            <td>${value.pages}</td>
-            <td>${value.genre}</td>
-            <td>${value.year}</td>
-            <td>${value.status}</td>
-            <td>
-                ${action}
-            </td>
-            
-            `
-        target.appendChild(tr)
+            <td>${value.user_name}</td>
+            <td>${action}</td>
+            `;
+        }
+
+        target.appendChild(tr);
     });
 }

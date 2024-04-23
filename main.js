@@ -73,7 +73,7 @@ const returnBook = async (event) => {
         return false;
     }
 
-    const isReturned = await returnBookAdapter(id, userName);
+    const isReturned = await returnBookAdapter(id, userName, "main");
 
     if (!isReturned) {
         response.innerHTML = "Sorry, you have an incorrect ID or username";

@@ -17,7 +17,7 @@ const importer = async () => {
     getAll = getAllAdmin, sortBookList = sortList, getAllReservations = getAllReserv, sortBookReservations = sortReserv;
     search = searchBookAdmin, sortBookResult = sortResult;
     fillTableFunc = fillTable;
-    createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook;
+    createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook, returnBookAdapter = returnBook;
     searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
 
     getAllAdmin();
@@ -75,15 +75,16 @@ const retrieveBook = async(event) => {
     event.preventDefault();
     const row = event.target.parentElement.parentElement;
     const rowId = row.id;
-    const dataRes = await returnBookAdapter(rowId);
+    const userName = row.children[2].innerHTML;
+    const dataRes = await returnBookAdapter(rowId, userName, "admin");
 
     if (!dataRes) {
         //Do something if the return fail
         return false;
     }
 
+    getAll();
     getAllReservations();
-
 }
 
 const arrayCleaner = (event, type) => {
