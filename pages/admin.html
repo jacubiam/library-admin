@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -11,24 +11,31 @@
 </head>
 
 <body>
-    <a href="../" target="_self">Home</a>
-    <button type="button" onclick="searchForm()">Search Book</button>
-    <a href="#reservation-table">Reservation List</a>
+    <nav class="navbar" id="nav">
+        <div class="container-md gap-3">
+            <div class="justify-content-center">
+                <a class="btn btn-info" href="#reservation-table">Reservation List</a>
+                <button class="btn btn-info" type="button" onclick="defaultForm()">Add Book</button>
+                <button class="btn btn-info" type="button" onclick="searchForm()">Search Book</button>
+            </div>
+            <a href="../" target="_self">Home</a>
+        </div>    
+    </nav>
 
 
-    <section id="main-form">
+    <section id="main-form" class="container-md">
         <form id="create-book-form" method="post" onsubmit="createBook(event)">
             <h1>Add Book</h1>
-            <input class="d-block" type="text" name="title" placeholder="Title" required>
-            <input class="d-block" type="text" name="author" placeholder="Autor" required>
-            <input class="d-block" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d+" required>
-            <input class="d-block" type="text" name="genre" placeholder="Genre" required>
-            <input class="d-block" type="number" name="year" placeholder="Year" required>
-            <label for="available">Available</label>
-            <input class="d-inline" type="radio" name="status" value="available" id="available" checked>
-            <label for="unavailable">Unavailable</label>
-            <input class="d-inline" type="radio" name="status" value="unavailable" id="unavailable">
-            <button class="d-block" type="submit">Add book</button>
+            <input class="form-control w-auto mb-2" type="text" name="title" placeholder="Title" required>
+            <input class="form-control w-auto mb-2" type="text" name="author" placeholder="Autor" required>
+            <input class="form-control w-auto mb-2" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d+" required>
+            <input class="form-control w-auto mb-2" type="text" name="genre" placeholder="Genre" required>
+            <input class="form-control w-auto mb-2" type="number" name="year" placeholder="Year" required>
+            <label class="form-check-label" for="available">Available</label>
+            <input class="form-check-input" type="radio" name="status" value="available" id="available" checked>
+            <label class="form-check-label" for="unavailable">Unavailable</label>
+            <input class="form-check-input" type="radio" name="status" value="unavailable" id="unavailable">
+            <button class="btn btn-success d-block mt-2" type="submit">Add book</button>
         </form>
     </section>
 
@@ -36,18 +43,18 @@
         <span id="response"></span>
     </article>
 
-    <section class="overflow-x-auto my-5" id="response-table">
+    <section class="container-md overflow-x-auto my-5" id="response-table">
 
     </section>
 
-    <section class="overflow-x-auto">
+    <section class="container-md overflow-x-auto">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-                <h1 class="d-inline align-middle">Book List</h1>
-                <button class="btn btn-primary align-text-top ms-3" type="button" data-bs-toggle="collapse"
+                <h1 class="d-inline align-middle me-3">Book List</h1>
+                <button class="btn btn-outline-info align-text-top" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse-table" aria-expanded="true" aria-controls="collapse-table"
                     onclick="listToggler(event)">
-                    Hide Book List
+                    Hide List
                 </button>
             </div>
             <div>
@@ -61,8 +68,8 @@
                     <option value="year">Year</option>
                     <option value="status">Status</option>
                 </select>
-                <label for="order-list">Descending</label>
-                <input type="checkbox" name="order" id="order-list" onchange="sortListAdmin()">
+                <label class="form-check-label" for="order-list">Descending</label>
+                <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list" onchange="sortListAdmin()">
             </div>
         </div>
         <table id="collapse-table" class="collapse show table table-sm table-bordered table-hover">
@@ -75,7 +82,7 @@
                     <th>Genre</th>
                     <th>Year</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th class="width-actions">Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -83,11 +90,11 @@
         </table>
     </section>
 
-    <section class="overflow-x-auto py-5" id="reservation-table">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+    <section class="container overflow-x-auto py-5 reserv-section" id="reservation-table">
+        <div class="d-flex justify-content-between column-gap-3 align-items-center mb-3">
             <div>
-                <h1 class="d-inline align-middle">Reservation List</h1>
-                <button class="btn btn-primary align-text-top ms-3" type="button" data-bs-toggle="collapse"
+                <h1 class="d-inline align-middle text-break me-3">Reservation List</h1>
+                <button class="btn btn-outline-info align-text-top" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse-table-reserv" aria-expanded="true" aria-controls="collapse-table-reserv"
                     onclick="listToggler(event)">
                     Hide List
@@ -100,8 +107,8 @@
                     <option selected value="title">Title</option>
                     <option selected value="user_name">User Name</option>
                 </select>
-                <label for="order-list-reserv">Descending</label>
-                <input type="checkbox" name="order" id="order-list-reserv" onchange="sortListReserv()">
+                <label class="form-check-label" for="order-list-reserv">Descending</label>
+                <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list-reserv" onchange="sortListReserv()">
             </div>
         </div>
         <table id="collapse-table-reserv" class="collapse show table table-sm table-bordered table-hover">
@@ -110,6 +117,7 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>User Name</th>
+                    <th class="width-actions">Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body-reserv">

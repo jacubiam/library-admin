@@ -91,17 +91,17 @@ export const fillTable = async (arr, target, context) => {
         switch (context) {
             case "main":
                 if (value.status === "available") {
-                    action = "<button type='button' onclick='loan(event)'>Loan</button>";
+                    action = "<button class='btn btn-success' type='button' onclick='loan(event)'>Loan</button>";
                 }
                 break;
             case "admin":
                 action = `
-                    <button type='button' onclick='edit(event)'>Edit</button>
-                    <button type='button' onclick='deleteBook(event)'>Delete</button>
+                    <button class='btn btn-warning mb-1 mb-xl-0' type='button' onclick='edit(event)'>Edit</button>
+                    <button class='btn btn-danger' type='button' onclick='deleteBook(event)'>Delete</button>
                 `;
                 break;
             case "reserv":
-                action = "<button type='button' onclick='retrieveBook(event)'>Retrieve</button>";
+                action = "<button class='btn btn-success' type='button' onclick='retrieveBook(event)'>Retrieve</button>";
             default:
                 break;
         }
@@ -118,7 +118,7 @@ export const fillTable = async (arr, target, context) => {
                 <td>${value.genre}</td>
                 <td>${value.year}</td>
                 <td>${value.status}</td>
-                <td>
+                <td class="align-middle text-center max-w-actions">
                     ${action}
                 </td>
                 `;
@@ -127,7 +127,7 @@ export const fillTable = async (arr, target, context) => {
             <td>${value.id}</td>
             <td>${value.title}</td>
             <td>${value.user_name}</td>
-            <td>${action}</td>
+            <td class="align-middle text-center max-w-actions">${action}</td>
             `;
         }
 

@@ -167,18 +167,18 @@ const edit = async (event) => {
     editForm.onsubmit = editBook;
     editForm.innerHTML = `
         <h1>Edit Book</h1>
-        <input class="d-block" type="text" name="title" placeholder="Title" required value="${data.title}">
-        <input class="d-block" type="text" name="author" placeholder="Autor" required value="${data.author}">
-        <input class="d-block" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required value="${data.pages}">
-        <input class="d-block" type="text" name="genre" placeholder="Genre" required value="${data.genre}">
-        <input class="d-block" type="number" name="year" placeholder="Year" required value="${data.year}">
-        <label for="available">Available</label>
-        <input class="d-inline" type="radio" name="status" value="available" id="available" ${available}>
-        <label for="unavailable">Unavailable</label>
-        <input class="d-inline" type="radio" name="status" value="unavailable" id="unavailable" ${unavailable}>
-        <div>
-            <button type="submit">Edit book</button>
-            <button type="button" onclick='defaultForm()'>Cancel</button>
+        <input class="form-control w-auto mb-2" type="text" name="title" placeholder="Title" required value="${data.title}">
+        <input class="form-control w-auto mb-2" type="text" name="author" placeholder="Autor" required value="${data.author}">
+        <input class="form-control w-auto mb-2" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required value="${data.pages}">
+        <input class="form-control w-auto mb-2" type="text" name="genre" placeholder="Genre" required value="${data.genre}">
+        <input class="form-control w-auto mb-2" type="number" name="year" placeholder="Year" required value="${data.year}">
+        <label class="form-check-label" for="available">Available</label>
+        <input class="form-check-input" type="radio" name="status" value="available" id="available" ${available}>
+        <label class="form-check-label" for="unavailable">Unavailable</label>
+        <input class="form-check-input" type="radio" name="status" value="unavailable" id="unavailable" ${unavailable}>
+        <div class="mt-2">
+            <button class="btn btn-success" type="submit">Edit book</button>
+            <button class="btn btn-outline-info" type="button" onclick='defaultForm()'>Cancel</button>
         </div>
     `;
     mainForm.appendChild(editForm);
@@ -193,16 +193,16 @@ const defaultForm = () => {
     addForm.onsubmit = createBook;
     addForm.innerHTML = `
         <h1>Add Book</h1>
-        <input class="d-block" type="text" name="title" placeholder="Title" required>
-        <input class="d-block" type="text" name="author" placeholder="Autor" required>
-        <input class="d-block" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required>
-        <input class="d-block" type="text" name="genre" placeholder="Genre" required>
-        <input class="d-block" type="number" name="year" placeholder="Year" required>
-        <label for="available">Available</label>
-        <input class="d-inline" type="radio" name="status" value="available" id="available" checked>
-        <label for="unavailable">Unavailable</label>
-        <input class="d-inline" type="radio" name="status" value="unavailable" id="unavailable">
-        <button class="d-block" type="submit">Add book</button>
+        <input class="form-control w-auto mb-2" type="text" name="title" placeholder="Title" required>
+        <input class="form-control w-auto mb-2" type="text" name="author" placeholder="Autor" required>
+        <input class="form-control w-auto mb-2" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required>
+        <input class="form-control w-auto mb-2" type="text" name="genre" placeholder="Genre" required>
+        <input class="form-control w-auto mb-2" type="number" name="year" placeholder="Year" required>
+        <label class="form-check-label" for="available">Available</label>
+        <input class="form-check-input" type="radio" name="status" value="available" id="available" checked>
+        <label class="form-check-label" for="unavailable">Unavailable</label>
+        <input class="form-check-input" type="radio" name="status" value="unavailable" id="unavailable">
+        <button class="btn btn-success d-block mt-2" type="submit">Add book</button>
     `;
     mainForm.appendChild(addForm);
 };

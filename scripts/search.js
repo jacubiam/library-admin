@@ -69,7 +69,7 @@ const tableResult =  (context) => {
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h1 class="d-inline align-middle">Results</h1>
-            <button class="align-text-top ms-3" type="button" onclick="cleanResults()">Clean</button>
+            <button class="btn btn-outline-light align-text-top ms-3" type="button" onclick="cleanResults()">Clean</button>
         </div>
         <div>
             <span>Sort:</span>
@@ -82,8 +82,8 @@ const tableResult =  (context) => {
                 <option value="year">Year</option>
                 <option value="status">Status</option>
             </select>
-            <label for="order-list-res">Descending</label>
-            <input type="checkbox" name="order" id="order-list-res" onchange=${sorter}>
+            <label class="form-check-label" for="order-list-res">Descending</label>
+            <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list-res" onchange=${sorter}>
         </div>
     </div>
     <table class="table table-sm table-bordered table-hover">
@@ -96,7 +96,7 @@ const tableResult =  (context) => {
                 <th>Genre</th>
                 <th>Year</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th class="width-actions">Actions</th>
             </tr>
         </thead>
         <tbody id="table-body-res">

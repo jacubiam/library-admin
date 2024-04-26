@@ -23,10 +23,10 @@ export const listTogglerFunc = (event) => {
     const button = event.target;
     if (listStatus) {
         setTimeout(() => {
-            button.innerHTML = "Show Book List";
+            button.innerHTML = "Show List";
         }, 300)
     } else {
-        button.innerHTML = "Hide Book List";
+        button.innerHTML = "Hide List";
     }
     listStatus = !listStatus;
 }
@@ -42,7 +42,7 @@ export const searchFormFunc = () => {
             <option value="genre">Genre</option>
             <option value="year">Year</option>
         </select>
-        <input type="text" name="search" placeholder="Search" onkeydown="searchInput(event)" required>
+        <input class="form-control default-input" type="text" name="search" placeholder="Search" onkeydown="searchInput(event)" required>
     </form>
     `;
 }
