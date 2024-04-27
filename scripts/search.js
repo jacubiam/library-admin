@@ -69,7 +69,7 @@ const tableResult =  (context) => {
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h1 class="d-inline align-middle">Results</h1>
-            <button class="btn btn-outline-light align-text-top ms-3" type="button" onclick="cleanResults()">Clean</button>
+            <button class="btn btn-outline-light align-text-top ms-3" type="button" onclick="cleanResults()">Clear</button>
         </div>
         <div>
             <span>Sort:</span>

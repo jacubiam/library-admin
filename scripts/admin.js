@@ -167,16 +167,21 @@ const edit = async (event) => {
     editForm.onsubmit = editBook;
     editForm.innerHTML = `
         <h1>Edit Book</h1>
-        <input class="form-control w-auto mb-2" type="text" name="title" placeholder="Title" required value="${data.title}">
-        <input class="form-control w-auto mb-2" type="text" name="author" placeholder="Autor" required value="${data.author}">
-        <input class="form-control w-auto mb-2" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required value="${data.pages}">
-        <input class="form-control w-auto mb-2" type="text" name="genre" placeholder="Genre" required value="${data.genre}">
-        <input class="form-control w-auto mb-2" type="number" name="year" placeholder="Year" required value="${data.year}">
+        <label class="form-label edit-label" for="title-edit">Title:</label>
+        <input class="form-control d-inline w-auto mb-2" id="title-edit" type="text" name="title" placeholder="Title" required value="${data.title}"><br/>
+        <label class="form-label edit-label" for="author-edit">Author:</label>
+        <input class="form-control d-inline w-auto mb-2" id="author-edit" type="text" name="author" placeholder="Autor" required value="${data.author}"><br/>
+        <label class="form-label edit-label" for="pages-edit">Pages:</label>
+        <input class="form-control d-inline w-auto mb-2" id="pages-edit" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required value="${data.pages}"><br/>
+        <label class="form-label edit-label" for="genre-edit">Genre:</label>
+        <input class="form-control d-inline w-auto mb-2" id="genre-edit" type="text" name="genre" placeholder="Genre" required value="${data.genre}"><br/>
+        <label class="form-label edit-label" for="year-edit">Year:</label>
+        <input class="form-control d-inline w-auto mb-3" id="year-edit" type="number" name="year" placeholder="Year" required value="${data.year}"><br/>
         <label class="form-check-label" for="available">Available</label>
         <input class="form-check-input" type="radio" name="status" value="available" id="available" ${available}>
         <label class="form-check-label" for="unavailable">Unavailable</label>
         <input class="form-check-input" type="radio" name="status" value="unavailable" id="unavailable" ${unavailable}>
-        <div class="mt-2">
+        <div class="mt-3">
             <button class="btn btn-success" type="submit">Edit book</button>
             <button class="btn btn-outline-info" type="button" onclick='defaultForm()'>Cancel</button>
         </div>
