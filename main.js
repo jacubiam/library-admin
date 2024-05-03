@@ -109,14 +109,14 @@ const loan = (event) => {
 
     const mainForm = document.getElementById("main-form");
     mainForm.innerHTML = `
-    <h1>Loan Form</h1>
-    <form id="loan-form" method="post" onsubmit="loanBook(event)">
+    <h1 class="text-center text-lg-start">Loan Form</h1>
+    <form class="border border-secondary rounded-3 p-3" id="loan-form" method="post" onsubmit="loanBook(event)">
         <label class="form-label" for="book-id">Book:</label>
-        <input class="form-control id-loan default-input" id="book-id" type="text" name="id" placeholder="ID" required readonly disabled value="${rowId}">
-        <input class="form-control default-input title-loan" type="text" name="title" placeholder="title" required readonly disabled value="${title}">
+        <input class="form-control id-loan d-inline w-auto" id="book-id" type="text" name="id" placeholder="ID" required readonly disabled value="${rowId}">
+        <input class="form-control d-inline w-auto title-loan" type="text" name="title" placeholder="title" required readonly disabled value="${title}">
         <div class="my-3">
             <label class="form-label" for="user_name">Your Name:</label>
-            <input class="form-control default-input" id="user-name" type="text" name="user_name" required>
+            <input class="form-control d-inline w-auto" id="user-name" type="text" name="user_name" required>
         </div>
         <button class="btn btn-success" type="submit">Loan Book</button>
         <button class="btn btn-outline-info" type="button" onclick="searchForm(event)">Cancel</button>
@@ -127,13 +127,13 @@ const loan = (event) => {
 const returnForm = () => {
     const mainForm = document.getElementById("main-form");
     mainForm.innerHTML = `
-    <h1>Return Form</h1>
-    <form id="return-form" method="get" onsubmit="returnBook(event)">
+    <h1 class="text-center text-lg-start">Return Form</h1>
+    <form class="border border-secondary rounded-3 p-3" id="return-form" method="get" onsubmit="returnBook(event)">
         <label class="form-label main-label" for="book-id">Book ID:</label>
-        <input class="form-control id-return default-input" id="book-id" type="number" name="id" placeholder="ID" min="1" max="9999" required>
+        <input class="form-control id-return d-inline w-auto" id="book-id" type="number" name="id" placeholder="ID" min="1" max="9999" required>
         <div class="my-3">
             <label class="form-label main-label" for="user-name">Your Name:</label>
-            <input class="form-control default-input" id="user-name" type="text" name="user_name" placeholder="User Name" required>
+            <input class="form-control d-inline w-auto" id="user-name" type="text" name="user_name" placeholder="User Name" required>
         </div>
         <button class="btn btn-success" type="submit">Return Book</button>
         <button class="btn btn-outline-info" type="button" onclick="searchForm(event)">Cancel</button>

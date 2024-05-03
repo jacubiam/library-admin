@@ -34,15 +34,15 @@ export const listTogglerFunc = (event) => {
 export const searchFormFunc = () => {
     const mainForm = document.getElementById("main-form");
     mainForm.innerHTML = `
-    <h1>Book Searching</h1>
-    <form id="search-form" method="post" onsubmit="searchSubmit(event)">
-        <select class="form-select d-inline w-auto" aria-label="Filter Select">
+    <h1 class="text-center text-lg-start">Book Searching</h1>
+    <form class="border border-secondary rounded-3 p-3" id="search-form" method="post" onsubmit="searchSubmit(event)">
+        <select class="form-select d-inline w-auto mb-2 mb-sm-0" aria-label="Filter Select">
             <option value="title">Title</option>
             <option value="author">Author</option>
             <option value="genre">Genre</option>
             <option value="year">Year</option>
         </select>
-        <input class="form-control default-input" type="text" name="search" placeholder="Search" onkeydown="searchInput(event)" required>
+        <input class="form-control d-inline w-auto" type="text" name="search" placeholder="Search" onkeydown="searchInput(event)" required>
     </form>
     `;
 }

@@ -160,13 +160,13 @@ const edit = async (event) => {
     }
 
     const mainForm = document.getElementById("main-form");
-    mainForm.innerHTML = "";
+    mainForm.innerHTML = "<h1 class='text-center text-lg-start'>Edit Book</h1>";
 
     const editForm = document.createElement("form");
     editForm.id = "edit-book-form";
+    editForm.className = "border border-secondary rounded-3 p-3";
     editForm.onsubmit = editBook;
-    editForm.innerHTML = `
-        <h1>Edit Book</h1>
+    editForm.innerHTML += `
         <label class="form-label edit-label" for="title-edit">Title:</label>
         <input class="form-control d-inline w-auto mb-2" id="title-edit" type="text" name="title" placeholder="Title" required value="${data.title}"><br/>
         <label class="form-label edit-label" for="author-edit">Author:</label>
@@ -191,13 +191,13 @@ const edit = async (event) => {
 
 const defaultForm = () => {
     const mainForm = document.getElementById("main-form");
-    mainForm.innerHTML = "";
+    mainForm.innerHTML = "<h1 class='text-center text-lg-start'>Add Book</h1>";
 
     const addForm = document.createElement("form");
     addForm.id = "create-book-form";
+    addForm.className = "border border-secondary rounded-3 p-3";
     addForm.onsubmit = createBook;
-    addForm.innerHTML = `
-        <h1>Add Book</h1>
+    addForm.innerHTML += `    
         <input class="form-control w-auto mb-2" type="text" name="title" placeholder="Title" required>
         <input class="form-control w-auto mb-2" type="text" name="author" placeholder="Autor" required>
         <input class="form-control w-auto mb-2" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required>
