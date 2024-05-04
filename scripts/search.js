@@ -89,6 +89,7 @@ const tableResult =  (context) => {
     <table class="table table-sm table-bordered table-hover">
         <thead>
             <tr>
+                <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Author</th>

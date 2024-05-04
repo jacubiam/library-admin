@@ -85,6 +85,7 @@ export const sorter = (arr, sort, descend) => {
 }
 
 export const fillTable = async (arr, target, context) => {
+    let iterator = 0;
     arr.forEach(value => {
         let action = "N/A";
 
@@ -111,6 +112,7 @@ export const fillTable = async (arr, target, context) => {
 
         if (!(context === "reserv")) {
             tr.innerHTML += `
+                <td>${++iterator}</td>
                 <td>${value.id}</td>
                 <td>${value.title}</td>
                 <td>${value.author}</td>
@@ -124,6 +126,7 @@ export const fillTable = async (arr, target, context) => {
                 `;
         } else {
             tr.innerHTML += `
+            <td>${++iterator}</td>
             <td>${value.id}</td>
             <td>${value.title}</td>
             <td>${value.user_name}</td>
