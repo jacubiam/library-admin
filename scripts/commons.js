@@ -32,6 +32,9 @@ export const listTogglerFunc = (event) => {
 }
 
 export const searchFormFunc = () => {
+    const infoText = document.getElementById("info-text");
+    infoText.innerHTML = "Search for a book given the selected filter";
+
     const mainForm = document.getElementById("main-form");
     mainForm.innerHTML = `
     <h1 class="text-center text-lg-start">Book Searching</h1>

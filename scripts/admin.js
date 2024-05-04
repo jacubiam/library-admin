@@ -26,6 +26,17 @@ const importer = async () => {
 
 importer();
 
+//Scroll handler (hashed urls)
+const hash = window.location.hash.slice(1); // Remove the '#' character
+if (hash) {
+    const targetElement = document.getElementById(hash);
+    if (targetElement) {
+        setTimeout(()=>{
+            targetElement.scrollIntoView(true);
+        },100)
+    }
+}
+
 let idHolder;
 
 const createBook = async (event) => {
@@ -187,6 +198,10 @@ const edit = async (event) => {
         </div>
     `;
     mainForm.appendChild(editForm);
+
+    const infoText = document.getElementById("info-text");
+    infoText.innerHTML = `Edit a book modifying all its attributes (except the ID).<br /><br />Hint: if a book is currently checked out, 
+    you can't edit its status, instead retrieve it first in the <a href="#reservation-table">Reservation List</a>`;
 }
 
 const defaultForm = () => {
@@ -210,7 +225,10 @@ const defaultForm = () => {
         <button class="btn btn-success d-block mt-2" type="submit">Add book</button>
     `;
     mainForm.appendChild(addForm);
-};
+
+    const infoText = document.getElementById("info-text");
+    infoText.innerHTML = "Add a book filling all the fields, the ID is random generated";
+}
 
 const clearFields = (event) => {
     const target = event.target;
