@@ -52,7 +52,11 @@ export const searchFormFunc = () => {
 
 export const hamburgerListener = () => {
     const ham =  document.getElementById("hamburger-btn");
+    const nav = document.getElementById("navbarTogglerTop");
+    const stylesNav = window.getComputedStyle(nav);
     ham.addEventListener("focusout", () => {
-        ham.click();
+        if(stylesNav.getPropertyValue("display") === "block") {
+            ham.click();
+        }
     });
 }
