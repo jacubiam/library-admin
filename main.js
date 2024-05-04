@@ -125,6 +125,8 @@ const loan = (event) => {
         <button class="btn btn-outline-info" type="button" onclick="searchForm(event)">Cancel</button>
     </form>
     `;
+
+    mainForm.scrollIntoView(true);
 }
 
 const returnForm = () => {

@@ -202,6 +202,8 @@ const edit = async (event) => {
     const infoText = document.getElementById("info-text");
     infoText.innerHTML = `Edit a book modifying all its attributes (except the ID).<br /><br />Hint: if a book is currently checked out, 
     you can't edit its status, instead retrieve it first in the <a href="#reservation-table">Reservation List</a>`;
+
+    mainForm.scrollIntoView(true);
 }
 
 const defaultForm = () => {
