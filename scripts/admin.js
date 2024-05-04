@@ -11,7 +11,7 @@ const importer = async () => {
     const { searchBookAdmin, sortResult } = await import("./search.js");
     const { fillTable } = await import("./utils.js");
     const { createBook, getBook, editBook, deleteBook, returnBook } = await import("./adapters.js");
-    const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc } = await import("./commons.js");
+    const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc, hamburgerListener } = await import("./commons.js");
 
     validateAdmin = validate;
     getAll = getAllAdmin, sortBookList = sortList, getAllReservations = getAllReserv, sortBookReservations = sortReserv;
@@ -20,6 +20,7 @@ const importer = async () => {
     createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook, returnBookAdapter = returnBook;
     searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
 
+    hamburgerListener();
     getAllAdmin();
     getAllReserv();
 }

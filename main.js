@@ -5,19 +5,20 @@ let searchSubmit, searchInput, cleanResults, listToggler, searchForm;
 
 const importer = async () => {
     const { validate } = await import("./scripts/mainValidator.js");
-    const { getAllMain,  sortList } = await import("./scripts/list.js");
+    const { getAllMain, sortList } = await import("./scripts/list.js");
     const { searchBookMain, sortResult } = await import("./scripts/search.js");
     const { fillTable } = await import("./scripts/utils.js");
     const { loanBook, returnBook } = await import("./scripts/adapters.js");
-    const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc } = await import("./scripts/commons.js");
-    
-    validateMain = validate; 
+    const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc, hamburgerListener } = await import("./scripts/commons.js");
+
+    validateMain = validate;
     getAll = getAllMain, sortBookList = sortList;
-    search = searchBookMain, sortBookResult = sortResult; 
+    search = searchBookMain, sortBookResult = sortResult;
     fillTableFunc = fillTable;
     loanAdapter = loanBook, returnBookAdapter = returnBook;
-    searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults =  cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
-    
+    searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
+
+    hamburgerListener();
     getAllMain();
 }
 
@@ -93,7 +94,7 @@ const returnBook = async (event) => {
 }
 
 const sortListMain = () => {
-    const values =  sortBookList();
+    const values = sortBookList();
     fillTableFunc(values.array, values.target, "main");
 }
 

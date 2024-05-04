@@ -49,3 +49,10 @@ export const searchFormFunc = () => {
     </form>
     `;
 }
+
+export const hamburgerListener = () => {
+    const ham =  document.getElementById("hamburger-btn");
+    ham.addEventListener("focusout", () => {
+        ham.click();
+    });
+}
