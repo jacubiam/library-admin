@@ -13,6 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         header('Content-type: application/json');
         echo json_encode($reservs);
     }
+
+    if ($_GET['query'] === "get_reserv") {
+        $reserv = Reservation::get_item($_GET['id'], $urlReserv);
+        if (gettype($reserv) === "array") {
+            http_response_code(404);    
+        }
+        header('Content-type: application/json');
+        echo json_encode($reserv);
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {

@@ -16,6 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
 
         if ($_GET['query'] === "get_book") {
             $get_book = Book::get_item($_GET['id'], $url);
+            if (gettype($get_book) === "array") {
+                http_response_code(404);    
+            }
             header('Content-type: application/json');
             echo json_encode($get_book);
         }

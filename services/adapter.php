@@ -43,6 +43,9 @@ abstract class Adapter
         });
 
         $item_filtered = array_slice($item_filtered, 0);
+        if(count($item_filtered) === 0){
+            return array("res" => "Item not found");
+        }
 
         if (str_contains($url, "books")) {
             $item_object = new Book($item_filtered[0]);
