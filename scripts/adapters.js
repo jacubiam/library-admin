@@ -95,7 +95,7 @@ export const editBook = async (arr) => {
     });
 
     if (!res.ok) {
-        throw new Error('Algo esta mal, crack');
+        return false;
     };
 
     const data = await res.json();
@@ -115,4 +115,14 @@ export const deleteBook = async (id) => {
     }
 
     return true;
+}
+
+export const getReserv = async (id) => {
+    const res = await fetch(`../api/reservations.php?query=get_reserv&id=${id}`);
+    const data = await res.json();
+
+    if (data.res) {
+        return false;
+    }
+    return data;
 }

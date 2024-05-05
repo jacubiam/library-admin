@@ -2,7 +2,7 @@ let validateAdmin;
 let getAll, sortBookList, getAllReservations, sortBookReservations;
 let search, sortBookResult;
 let fillTableFunc;
-let createBookAdapter, getBookAdapter, editBookAdapter, deleteBookAdapter, returnBookAdapter;
+let createBookAdapter, getBookAdapter, editBookAdapter, deleteBookAdapter, returnBookAdapter, getReservAdapter;
 let searchSubmit, searchInput, cleanResults, listToggler, searchForm;
 
 const importer = async () => {
@@ -10,14 +10,14 @@ const importer = async () => {
     const { getAllAdmin, getAllReserv, sortList, sortReserv } = await import("./list.js");
     const { searchBookAdmin, sortResult } = await import("./search.js");
     const { fillTable } = await import("./utils.js");
-    const { createBook, getBook, editBook, deleteBook, returnBook } = await import("./adapters.js");
+    const { createBook, getBook, editBook, deleteBook, returnBook, getReserv } = await import("./adapters.js");
     const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc, hamburgerListener } = await import("./commons.js");
 
     validateAdmin = validate;
     getAll = getAllAdmin, sortBookList = sortList, getAllReservations = getAllReserv, sortBookReservations = sortReserv;
     search = searchBookAdmin, sortBookResult = sortResult;
     fillTableFunc = fillTable;
-    createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook, returnBookAdapter = returnBook;
+    createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook, returnBookAdapter = returnBook, getReservAdapter = getReserv;
     searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
 
     hamburgerListener();
@@ -32,9 +32,9 @@ const hash = window.location.hash.slice(1); // Remove the '#' character
 if (hash) {
     const targetElement = document.getElementById(hash);
     if (targetElement) {
-        setTimeout(()=>{
+        setTimeout(() => {
             targetElement.scrollIntoView(true);
-        },100)
+        }, 100)
     }
 }
 
@@ -58,7 +58,19 @@ const editBook = async (event) => {
         return false;
     }
 
+    
     const dataRes = await editBookAdapter(arr);
+    if (!dataRes) {
+        const response = document.getElementById("response");
+        response.innerHTML = `
+        This book is currently checked out, you can't edit it, 
+        instead retrieve it first in the <a href="#reservation-table">Reservation List</a>
+        `;
+        setTimeout(() => {
+            response.innerHTML = "";
+        }, 5000);
+        return false;
+    }
     resultPrint("edit", dataRes.title);
 };
 
@@ -70,7 +82,7 @@ const deleteBook = async (event) => {
 
     if (dataRes) {
         getAll();
-        const tableBody = row.parentElement; 
+        const tableBody = row.parentElement;
         if (tableBody.id === "table-body-res") {
             row.remove();
             if (tableBody.childElementCount === 0) {
@@ -83,7 +95,7 @@ const deleteBook = async (event) => {
     }
 };
 
-const retrieveBook = async(event) => {
+const retrieveBook = async (event) => {
     event.preventDefault();
     const row = event.target.parentElement.parentElement;
     const rowId = row.id;
@@ -151,10 +163,10 @@ const resultPrint = (type, title) => {
 
     defaultForm();
     getAll();
-    
+
     const tableRes = document.getElementById("table-body-res")
     if (tableRes) {
-        search();   
+        search();
     }
 }
 
@@ -202,7 +214,7 @@ const edit = async (event) => {
 
     const infoText = document.getElementById("info-text");
     infoText.innerHTML = `Edit a book modifying all its attributes (except the ID).<br /><br />Hint: if a book is currently checked out, 
-    you can't edit its status, instead retrieve it first in the <a href="#reservation-table">Reservation List</a>`;
+    you can't edit it, instead retrieve it first in the <a href="#reservation-table">Reservation List</a>`;
 
     mainForm.scrollIntoView(true);
 }
