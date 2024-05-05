@@ -58,7 +58,6 @@ const editBook = async (event) => {
         return false;
     }
 
-    
     const dataRes = await editBookAdapter(arr);
     if (!dataRes) {
         const response = document.getElementById("response");

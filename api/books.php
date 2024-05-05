@@ -4,6 +4,7 @@ spl_autoload_register(function ($class_name) {
 });
 
 $url = "../db/books.csv";
+$urlReserv = "../db/reservations.csv";
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
     if (isset($_GET['query'])) {
@@ -59,8 +60,21 @@ if ($_SERVER['REQUEST_METHOD'] === "PUT") {
     $put_data = json_decode($raw_data, true);
 
     $get_book = Book::get_item($put_data['id'], $url);
-    $get_book->edit_item($put_data);
     header('Content-type: application/json');
+    if (gettype($get_book) === "array") {
+        http_response_code(404);
+        echo json_encode($get_book);
+        exit();
+    }
+
+    $get_reserv = Reservation::get_item($put_data['id'], $urlReserv);  
+    if (!(gettype($get_reserv) === "array")) {
+        http_response_code(404);
+        echo json_encode(array("res" => "A Borrowed book cannot be edited"));
+        exit();
+    }
+    
+    $get_book->edit_item($put_data);
     echo json_encode($put_data);
 }
 
