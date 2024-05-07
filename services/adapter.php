@@ -38,6 +38,7 @@ abstract class Adapter
     public static function get_item($id, $url)
     {
         $data = self::get_all($url);
+        $id = strval($id);
         $item_filtered = array_filter($data, function ($item) use ($id) {
             return ($item['id'] === $id);
         });
@@ -63,7 +64,7 @@ abstract class Adapter
     {
         $url = $this->url;
         $update = $args[0];
-        $id = $update['id'];
+        $id = strval($update['id']);
         $data = self::get_all_indexed($url);
         $item_filtered = array_filter($data, function ($item) use ($id) {
             return ($item[0] === $id);
