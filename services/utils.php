@@ -37,7 +37,7 @@ function validator($data, $context)
     if ($context === "loan") {
         if (count($data) !== 2) {
             $result['status'] = false;
-            $result['message'] = "Unexpected amount of fields, sent " . count($data) . ", expected (7).";
+            $result['message'] = "Unexpected amount of fields, sent " . count($data) . ", expected (2).";
             return $result;
         }
 

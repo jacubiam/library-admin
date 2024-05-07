@@ -2,35 +2,72 @@
 spl_autoload_register(function ($class_name) {
     include "../services/" . strtolower($class_name) . '.services.php';
 });
+include_once "../services/utils.php";
 
 $urlReserv = "../db/reservations.csv";
 $urlBook = "../db/books.csv";
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
-    if ($_GET['query'] === "get_all") {
-        $reservs = Reservation::get_all($urlReserv);
-        sort($reservs);
-        header('Content-type: application/json');
-        echo json_encode($reservs);
-    }
-
-    if ($_GET['query'] === "get_reserv") {
-        $reserv = Reservation::get_item($_GET['id'], $urlReserv);
-        if (gettype($reserv) === "array") {
-            http_response_code(404);    
+    header('Content-type: application/json');
+    if (isset($_GET['query'])) {
+        if ($_GET['query'] === "get_all") {
+            $reservs = Reservation::get_all($urlReserv);
+            sort($reservs);
+            echo json_encode($reservs);
+            exit();
         }
-        header('Content-type: application/json');
-        echo json_encode($reserv);
+
+        if ($_GET['query'] === "get_reserv") {
+            if (!isset($_GET['id'])) {
+                http_response_code(400);
+                echo json_encode(array("res" => "Id param not found"));
+                exit();
+            }
+            $reserv = Reservation::get_item($_GET['id'], $urlReserv);
+            if (gettype($reserv) === "array") {
+                http_response_code(404);
+            }
+            echo json_encode($reserv);
+            exit();
+        }
+
+        http_response_code(404);
+        echo json_encode(array("res" => "Query not found"));
+        exit();
+    } else {
+        http_response_code(400);
+        echo json_encode(array("res" => "GET request needs a query parameter"));
+        exit();
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $raw_data = file_get_contents('php://input');
     $post_data = json_decode($raw_data, true);
+
+    //If a json is not passed:
+    if ($post_data === null) {
+        http_response_code(400);
+        echo json_encode(array("res" => "JSON Expected"));
+        exit();
+    }
+
+    $verifier = validator($post_data, "loan");
+    if (!$verifier['status']) {
+        http_response_code(400);
+        echo json_encode(array("res" => $verifier['message']));
+        exit();
+    }
+
     $id_book = $post_data['id'];
     $user_name = $post_data['user_name'];
 
     $book = Book::get_item($id_book, $urlBook);
+    if (gettype($book) === "array") {
+        http_response_code(404);
+        echo json_encode($book);
+        exit();
+    }
 
     if ($book->get_status() === "available") {
         $new_reserv = new Reservation($id_book, $book->get_title(), $user_name);
@@ -58,14 +95,28 @@ if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
         $query_id = $query[0];
         $query_id = explode("=", $query_id);
         $id = end($query_id);
-        //Try
+
         $del_reserv = Reservation::get_item($id, $urlReserv);
-        
+        if (gettype($del_reserv) === "array") {
+            http_response_code(404);
+            echo json_encode($del_reserv);
+            exit();
+        }
+
         if ($del_reserv->get_id() == $id && $del_reserv->get_user_name() == $user_name) {
             $del_reserv->delete_item();
             $retrieve = Book::get_item($id, $urlBook);
+
+            //Double check, just to make sure that the book exist
+            if (gettype($retrieve) === "array") {
+                http_response_code(404);
+                echo json_encode($retrieve);
+                exit();
+            }
+
             $retrieve->set_status("available");
-            http_response_code(204);
+            http_response_code(202);
+            echo json_encode(array("res" => "Returned it"));
         } else {
             http_response_code(403);
             header('Content-type: application/json');
