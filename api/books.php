@@ -18,6 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         }
 
         if ($_GET['query'] === "get_book") {
+            if (!isset($_GET['id'])) {
+                http_response_code(400);
+                echo json_encode(array("res" => "Id param not found"));
+                exit();
+            }
             $get_book = Book::get_item($_GET['id'], $url);
             if (gettype($get_book) === "array") {
                 http_response_code(404);
@@ -26,24 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
             exit();
         }
 
-        if (count($_GET) > 1) {
+        //Keys used for searching
+        $keys = ["title", "author", "genre", "year"];
+        if (!(array_search(strtolower($_GET['query']), $keys) === false)) {
             if (isset($_GET['search'])) {
                 $books = Book::get_all($url);
-                $search = $_GET['search'];
-
-                $keys = ["title", "author", "genre", "year"];
-                if (array_search(strtolower($_GET['query']), $keys) === false) {
-                    http_response_code(404);
-                    echo json_encode(array("res" => "Query not found"));
-                    exit();
-                }
-
+                $search = $_GET['search']; 
                 $books_filtered = array_filter($books, function ($book) use ($search) {
                     return (strtolower($book[$_GET['query']]) === strtolower($search));
                 });
                 $books_filtered = array_slice($books_filtered, 0);
                 sort($books_filtered);
-
+    
                 if (count($books_filtered) !== 0) {
                     echo json_encode($books_filtered);
                     exit();
@@ -54,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
                 }
             } else {
                 http_response_code(400);
-                echo json_encode(array("res" => "Unknown extra parameters"));
+                echo json_encode(array("res" => "Search parameter not found"));
                 exit();
             }
         }
