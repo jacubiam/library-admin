@@ -24,7 +24,7 @@ export const listTogglerFunc = (event) => {
     if (listStatus) {
         setTimeout(() => {
             button.innerHTML = "Show List";
-        }, 300)
+        }, 300);
     } else {
         button.innerHTML = "Hide List";
     }
@@ -51,11 +51,11 @@ export const searchFormFunc = () => {
 }
 
 export const hamburgerListener = () => {
-    const ham =  document.getElementById("hamburger-btn");
+    const ham = document.getElementById("hamburger-btn");
     const nav = document.getElementById("navbarTogglerTop");
     const stylesNav = window.getComputedStyle(nav);
     ham.addEventListener("focusout", () => {
-        if(stylesNav.getPropertyValue("display") === "block") {
+        if (stylesNav.getPropertyValue("display") === "block") {
             ham.click();
         }
     });

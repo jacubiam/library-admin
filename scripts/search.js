@@ -5,12 +5,12 @@ let resultCache = undefined;
 let lastFilter = undefined;
 let lastInput = undefined;
 
-export const searchBookMain = async (filter = lastFilter, input = lastInput) => { 
+export const searchBookMain = async (filter = lastFilter, input = lastInput) => {
     if (!filter || !input) {
         return false;
     }
-    
-    const data = await searchPerform(filter, input, "main")
+
+    const data = await searchPerform(filter, input, "main");
     if (!data) {
         return false;
     }
@@ -18,14 +18,14 @@ export const searchBookMain = async (filter = lastFilter, input = lastInput) => 
     tableResult("main");
 
     const values = sortResult(data);
-    fillTable(values.array, values.target, "main")
+    fillTable(values.array, values.target, "main");
 }
 
-export const searchBookAdmin = async (filter = lastFilter, input = lastInput) => { 
+export const searchBookAdmin = async (filter = lastFilter, input = lastInput) => {
     if (!filter || !input) {
         return false;
     }
-    
+
     const data = await searchPerform(filter, input, "admin");
     if (!data) {
         return false;
@@ -40,12 +40,12 @@ export const searchBookAdmin = async (filter = lastFilter, input = lastInput) =>
 const searchPerform = async (filter, input, context) => {
     const filterClean = filter.toLowerCase().trim();
     const inputClean = input.toLowerCase().trim();
-    const data = await searchBook(filterClean, inputClean, context)
+    const data = await searchBook(filterClean, inputClean, context);
     resultCache = data;
     lastFilter = filterClean;
     lastInput = inputClean;
-    
-    if (data.not_found) {
+
+    if (!data) {
         const responseText = document.getElementById("response");
         responseText.innerHTML = `We do not have a book with the <span>${input}</span> <span>${filter}</span>`;
         const tableRes = document.getElementById("response-table");
@@ -56,7 +56,7 @@ const searchPerform = async (filter, input, context) => {
     return data;
 }
 
-const tableResult =  (context) => {
+const tableResult = (context) => {
     let sorter;
     if (context === "main") {
         sorter = "sortResultMain()";
@@ -113,11 +113,11 @@ export const sortResult = (arr = resultCache) => {
     }
 
     const tableList = document.getElementById("table-body-res");
-    tableList.innerHTML = ""
+    tableList.innerHTML = "";
     const sort = document.getElementById("select-list-res").value;
     const checkbox = document.getElementById("order-list-res").checked;
 
-    const list = sorter(arr, sort, checkbox)
+    const list = sorter(arr, sort, checkbox);
     data.array = list;
     data.target = tableList;
 

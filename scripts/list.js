@@ -36,11 +36,11 @@ export const sortList = (arr = listCache) => {
     }
 
     const tableList = document.getElementById("table-body");
-    tableList.innerHTML = ""
+    tableList.innerHTML = "";
     const sort = document.getElementById("select-list").value;
     const checkbox = document.getElementById("order-list").checked;
 
-    const list = sorter(arr, sort, checkbox)
+    const list = sorter(arr, sort, checkbox);
     data.array = list;
     data.target = tableList;
 
@@ -54,11 +54,11 @@ export const sortReserv = (arr = reservCache) => {
     }
 
     const tableList = document.getElementById("table-body-reserv");
-    tableList.innerHTML = ""
+    tableList.innerHTML = "";
     const sort = document.getElementById("select-list-reserv").value;
     const checkbox = document.getElementById("order-list-reserv").checked;
 
-    const list = sorter(arr, sort, checkbox)
+    const list = sorter(arr, sort, checkbox);
     data.array = list;
     data.target = tableList;
 

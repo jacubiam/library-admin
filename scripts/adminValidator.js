@@ -26,7 +26,7 @@ export const validate = (event, type) => {
         validation.field = "global";
         validation.message = "Unexpected amount of fields, reload and try again";
         return validation;
-    };
+    }
 
     //In case a name has an invalid name (external manipulation)
     const wrongForm = () => {
@@ -42,8 +42,8 @@ export const validate = (event, type) => {
             validation.field = "global";
             validation.message = "Fill all fields";
             return validation;
-        };
-    };
+        }
+    }
 
     //Alphanumeric test for title
     if (targets[0].name === "title") {
@@ -52,11 +52,11 @@ export const validate = (event, type) => {
             validation.field = targets[0].name;
             validation.message = "Title is not correct, use alphanumeric chars only and avoid long spaces";
             return validation;
-        };
+        }
     } else {
         wrongForm();
         return validation;
-    };
+    }
 
     //Alphabetical only test
     if (targets[1].name === "author") {
@@ -69,21 +69,20 @@ export const validate = (event, type) => {
     } else {
         wrongForm();
         return validation;
-    };
+    }
 
     //Numeric integer only test
     if (targets[2].name === "pages") {
-        console.log(targets[2].name);
         if (!(/^\d+$/.test(targets[2].value)) || targets[2].value <= 0) {
             validation.state = false;
             validation.field = targets[2].name;
             validation.message = "Pages is not correct, use positive integers only and avoid long spaces";
             return validation;
-        };
+        }
     } else {
         wrongForm();
         return validation;
-    };
+    }
 
     //Alphabetical only test
     if (targets[3].name === "genre") {
@@ -92,11 +91,11 @@ export const validate = (event, type) => {
             validation.field = targets[3].name;
             validation.message = "Genre is not correct, use alphabetical chars only and avoid long spaces";
             return validation;
-        };
+        }
     } else {
         wrongForm();
         return validation;
-    };
+    }
 
     //Numeric integer only test
     if (targets[4].name === "year") {
@@ -105,11 +104,11 @@ export const validate = (event, type) => {
             validation.field = targets[4].name;
             validation.message = "Pages is not correct, use numeric chars only and avoid long spaces";
             return validation;
-        };
+        }
     } else {
         wrongForm();
         return validation;
-    };
+    }
 
     //Check radio button values
     if ((targets[5].name === "status") && (targets[6].name === "status")) {
@@ -118,11 +117,11 @@ export const validate = (event, type) => {
             validation.field = targets[5].name;
             validation.message = "Radio buttons contain wrong information, reload the page";
             return validation;
-        };
+        }
     } else {
         wrongForm();
         return validation;
-    };
+    }
 
     return validation;
 }

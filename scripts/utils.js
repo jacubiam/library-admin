@@ -4,24 +4,24 @@ export const sorter = (arr, sort, descend) => {
             arr.sort((a, b) => {
                 const sa = a.title.toLowerCase(), sb = b.title.toLowerCase();
                 if (sa < sb) {
-                    return -1
+                    return -1;
                 }
                 if (sa > sb) {
-                    return 1
+                    return 1;
                 }
-                return 0
+                return 0;
             });
             break;
         case "author":
             arr.sort((a, b) => {
                 const sa = a.author.toLowerCase(), sb = b.author.toLowerCase();
                 if (sa < sb) {
-                    return -1
+                    return -1;
                 }
                 if (sa > sb) {
-                    return 1
+                    return 1;
                 }
-                return 0
+                return 0;
             });
             break;
         case "pages":
@@ -33,12 +33,12 @@ export const sorter = (arr, sort, descend) => {
             arr.sort((a, b) => {
                 const sa = a.genre.toLowerCase(), sb = b.genre.toLowerCase();
                 if (sa < sb) {
-                    return -1
+                    return -1;
                 }
                 if (sa > sb) {
-                    return 1
+                    return 1;
                 }
-                return 0
+                return 0;
             });
             break;
         case "year":
@@ -50,24 +50,24 @@ export const sorter = (arr, sort, descend) => {
             arr.sort((a, b) => {
                 const sa = a.status.toLowerCase(), sb = b.status.toLowerCase();
                 if (sa < sb) {
-                    return -1
+                    return -1;
                 }
                 if (sa > sb) {
-                    return 1
+                    return 1;
                 }
-                return 0
+                return 0;
             });
             break;
         case "user_name":
             arr.sort((a, b) => {
                 const sa = a.user_name.toLowerCase(), sb = b.user_name.toLowerCase();
                 if (sa < sb) {
-                    return -1
+                    return -1;
                 }
                 if (sa > sb) {
-                    return 1
+                    return 1;
                 }
-                return 0
+                return 0;
             });
             break;
         default:

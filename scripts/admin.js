@@ -34,7 +34,7 @@ if (hash) {
     if (targetElement) {
         setTimeout(() => {
             targetElement.scrollIntoView(true);
-        }, 100)
+        }, 100);
     }
 }
 
@@ -49,7 +49,7 @@ const createBook = async (event) => {
 
     const dataRes = await createBookAdapter(arr);
     resultPrint("create", dataRes.title);
-};
+}
 
 const editBook = async (event) => {
     event.preventDefault();
@@ -71,7 +71,7 @@ const editBook = async (event) => {
         return false;
     }
     resultPrint("edit", dataRes.title);
-};
+}
 
 const deleteBook = async (event) => {
     event.preventDefault();
@@ -92,7 +92,7 @@ const deleteBook = async (event) => {
     } else {
         //When Delete fails Do Something
     }
-};
+}
 
 const retrieveBook = async (event) => {
     event.preventDefault();
@@ -128,8 +128,8 @@ const arrayCleaner = (event, type) => {
     for (let i = 0; i < radios.length; i++) {
         if (radios[i].checked) {
             selectedRadio = radios[i];
-        };
-    };
+        }
+    }
 
     let data = {};
 
@@ -163,7 +163,7 @@ const resultPrint = (type, title) => {
     defaultForm();
     getAll();
 
-    const tableRes = document.getElementById("table-body-res")
+    const tableRes = document.getElementById("table-body-res");
     if (tableRes) {
         search();
     }
@@ -249,9 +249,9 @@ const clearFields = (event) => {
     for (let i = 0; i < target.length; i++) {
         if (!(target[i].type === "radio")) {
             target[i].value = "";
-        };
-    };
-};
+        }
+    }
+}
 
 const sortListAdmin = () => {
     const values = sortBookList();

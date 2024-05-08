@@ -14,6 +14,11 @@ export const searchBook = async (filter, input, context) => {
         url = `../api/books.php?query=${filter}&search=${input}`;
     }
     const res = await fetch(url);
+
+    if (!res.ok) {
+        return false;
+    }
+
     const data = await res.json();
     return data;
 }
@@ -33,7 +38,7 @@ export const loanBook = async (id, user) => {
     });
 
     if (!res.ok) {
-        throw new Error("Book not Available for loan")
+        return false;
     }
 
     const resJS = await res.json();
@@ -73,7 +78,7 @@ export const createBook = async (arr) => {
 
     if (!res.ok) {
         throw new Error('Algo esta mal, crack');
-    };
+    }
 
     const data = await res.json();
     return data;
@@ -96,7 +101,7 @@ export const editBook = async (arr) => {
 
     if (!res.ok) {
         return false;
-    };
+    }
 
     const data = await res.json();
     return data;
@@ -121,7 +126,7 @@ export const getReserv = async (id) => {
     const res = await fetch(`../api/reservations.php?query=get_reserv&id=${id}`);
     const data = await res.json();
 
-    if (data.res) {
+    if (!res.ok) {
         return false;
     }
     return data;
