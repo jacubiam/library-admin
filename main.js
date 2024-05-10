@@ -108,8 +108,8 @@ const loan = (event) => {
     infoText.innerHTML = "Loan a book with your name (or any name)";
 
     const parentRow = event.target.parentElement.parentElement;
-    const rowId = parentRow.children[0].innerHTML;
-    const title = parentRow.children[1].innerHTML;
+    const rowId = parentRow.children[1].innerHTML;
+    const title = parentRow.children[2].innerHTML;
 
     const mainForm = document.getElementById("main-form");
     mainForm.innerHTML = `
