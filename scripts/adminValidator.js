@@ -99,10 +99,10 @@ export const validate = (event, type) => {
 
     //Numeric integer only test
     if (targets[4].name === "year") {
-        if (!(/^\-?\d+$/.test(targets[4].value))) {
+        if (!(/^\-?\d+$/.test(targets[4].value)) || targets[4].value == 0) {
             validation.state = false;
             validation.field = targets[4].name;
-            validation.message = "Pages is not correct, use numeric chars only and avoid long spaces";
+            validation.message = "Pages is not correct, use integers only (non-zero)";
             return validation;
         }
     } else {

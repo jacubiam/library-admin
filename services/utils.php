@@ -4,10 +4,10 @@ function validator($data, $context)
     $result = array("status" => true, "message" => "none");
     $model_keys = [];
 
-    foreach ($data as $value) {
+    foreach ($data as $key => $value) {
         if (empty($value)) {
             $result['status'] = false;
-            $result['message'] = "Empty field found";
+            $result['message'] = "Empty or field with zero found ($key)";
             return $result;
         }
     }
