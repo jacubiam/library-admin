@@ -32,7 +32,6 @@
     width: 30px;
 }
 
-/*Not used for now*/
 .w-fit {
     width: fit-content;
 }
@@ -45,11 +44,17 @@
     min-width: 240px;
 }
 
-.info-icon:hover{
+.button-close-res {
+    top: 4px;
+    right: 4px;
+    position: absolute;
+}
+
+.info-icon:hover {
     content: url("./assets/info-circle-hover.png");
 }
 
-@media screen and (min-width:640px){
+@media screen and (min-width:640px) {
     .title-loan {
         width: 250px;
     }
@@ -84,6 +89,11 @@
 
     .right-dropdown {
         right: 4px !important;
+    }
+
+    .block-gap-res {
+        width: 40px;
+        display: inline-block;
     }
 }
 

@@ -1,16 +1,16 @@
 export const searchSubmitFunc = (event) => {
     event.preventDefault();
+    const response = document.getElementById("response");
+    response.parentElement.classList.replace("d-inline-block", "d-none");
+    response.classList.replace("text-success-emphasis", "text-danger-emphasis");
     search(event.target[0].value, event.target[1].value);
 }
 
-//This function is for later features
-export const searchInputFunc = (event) => {
-    const responseText = document.getElementById("response");
-    responseText.innerHTML = "";
-    /*if (event.key === "Enter") {
-        const parent = event.target.parentElement;
-        search(parent[0].value, event.target.value)
-    } */
+export const resCleanerFunc = () => {
+    const response = document.getElementById("response");
+    response.parentElement.classList.replace("d-inline-block", "d-none");
+    response.classList.replace("text-success-emphasis", "text-danger-emphasis");
+    response.innerHTML = "";
 }
 
 export const cleanResultsFunc = () => {
@@ -32,6 +32,10 @@ export const listTogglerFunc = (event) => {
 }
 
 export const searchFormFunc = () => {
+    const response = document.getElementById("response");
+    response.parentElement.classList.replace("d-inline-block", "d-none");
+    response.classList.replace("text-success-emphasis", "text-danger-emphasis");
+
     const infoText = document.getElementById("info-text");
     infoText.innerHTML = "Search for a book given the selected filter";
 
@@ -45,7 +49,7 @@ export const searchFormFunc = () => {
             <option value="genre">Genre</option>
             <option value="year">Year</option>
         </select>
-        <input class="form-control d-inline w-auto" type="text" name="search" placeholder="Search" onkeydown="searchInput(event)" required>
+        <input class="form-control d-inline w-auto" type="text" name="search" placeholder="Search" onkeydown="resCleaner()" required>
     </form>
     `;
 }

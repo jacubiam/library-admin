@@ -92,7 +92,7 @@ export const fillTable = async (arr, target, context) => {
         switch (context) {
             case "main":
                 if (value.status === "available") {
-                    action = "<button class='btn btn-success' type='button' onclick='loan(event)'>Loan</button>";
+                    action = "<button class='btn btn-success' type='button' onclick='loanForm(event)'>Borrow</button>";
                 }
                 break;
             case "admin":

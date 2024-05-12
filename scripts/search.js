@@ -46,8 +46,10 @@ const searchPerform = async (filter, input, context) => {
     lastInput = inputClean;
 
     if (!data) {
-        const responseText = document.getElementById("response");
-        responseText.innerHTML = `We do not have a book with the <span>${input}</span> <span>${filter}</span>`;
+        const response = document.getElementById("response");
+        response.parentElement.classList.replace("d-none", "d-inline-block");
+        response.classList.replace("text-success-emphasis", "text-danger-emphasis");
+        response.innerHTML = `We do not have a book with: the <span>${input}</span> <span>${filter}</span>`;
         const tableRes = document.getElementById("response-table");
         tableRes.innerHTML = "";
         return false;
