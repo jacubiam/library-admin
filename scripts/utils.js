@@ -97,7 +97,7 @@ export const fillTable = async (arr, target, context) => {
                 break;
             case "admin":
                 action = `
-                    <button class='btn btn-warning mb-1 mb-xl-0' type='button' onclick='edit(event)'>Edit</button>
+                    <button class='btn btn-warning mb-1 mb-xl-0' type='button' onclick='editForm(event)'>Edit</button>
                     <button class='btn btn-danger' type='button' onclick='deleteBook(event)'>Delete</button>
                 `;
                 break;

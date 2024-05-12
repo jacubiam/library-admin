@@ -77,7 +77,7 @@ export const createBook = async (arr) => {
     });
 
     if (!res.ok) {
-        throw new Error('Algo esta mal, crack');
+        return false;
     }
 
     const data = await res.json();

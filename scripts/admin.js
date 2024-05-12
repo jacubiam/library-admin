@@ -3,7 +3,7 @@ let getAll, sortBookList, getAllReservations, sortBookReservations;
 let search, sortBookResult;
 let fillTableFunc;
 let createBookAdapter, getBookAdapter, editBookAdapter, deleteBookAdapter, returnBookAdapter, getReservAdapter;
-let searchSubmit, searchInput, cleanResults, listToggler, searchForm;
+let searchSubmit, resCleaner, cleanResults, listToggler, searchForm;
 
 const importer = async () => {
     const { validate } = await import("./adminValidator.js");
@@ -11,14 +11,14 @@ const importer = async () => {
     const { searchBookAdmin, sortResult } = await import("./search.js");
     const { fillTable } = await import("./utils.js");
     const { createBook, getBook, editBook, deleteBook, returnBook, getReserv } = await import("./adapters.js");
-    const { searchSubmitFunc, searchInputFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc, hamburgerListener } = await import("./commons.js");
+    const { searchSubmitFunc, resCleanerFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc, hamburgerListener } = await import("./commons.js");
 
     validateAdmin = validate;
     getAll = getAllAdmin, sortBookList = sortList, getAllReservations = getAllReserv, sortBookReservations = sortReserv;
     search = searchBookAdmin, sortBookResult = sortResult;
     fillTableFunc = fillTable;
     createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook, returnBookAdapter = returnBook, getReservAdapter = getReserv;
-    searchSubmit = searchSubmitFunc, searchInput = searchInputFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
+    searchSubmit = searchSubmitFunc, resCleaner = resCleanerFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
 
     hamburgerListener();
     getAllAdmin();
@@ -42,17 +42,30 @@ let idHolder;
 
 const createBook = async (event) => {
     event.preventDefault();
+    const response = document.getElementById("response");
+    response.classList.replace("text-success-emphasis", "text-danger-emphasis");
+    response.parentElement.classList.replace("d-none", "d-inline-block");
+
     const arr = arrayCleaner(event, "createForm");
     if (!arr) {
         return false;
     }
 
     const dataRes = await createBookAdapter(arr);
-    resultPrint("create", dataRes.title);
+    if (!dataRes) {
+        response.innerHTML = "Book not created, check your info again"
+
+        return false;
+    }
+    resultPrint("create", dataRes.title, event);
 }
 
 const editBook = async (event) => {
     event.preventDefault();
+    const response = document.getElementById("response");
+    response.classList.replace("text-success-emphasis", "text-danger-emphasis");
+    response.parentElement.classList.replace("d-none", "d-inline-block");
+
     const arr = arrayCleaner(event, "editForm");
     if (!arr) {
         return false;
@@ -60,17 +73,14 @@ const editBook = async (event) => {
 
     const dataRes = await editBookAdapter(arr);
     if (!dataRes) {
-        const response = document.getElementById("response");
         response.innerHTML = `
-        This book is currently checked out, you can't edit it, 
+        This book is currently on loan, you can't edit it, 
         instead retrieve it first in the <a href="#reservation-table">Reservation List</a>
         `;
-        setTimeout(() => {
-            response.innerHTML = "";
-        }, 5000);
+
         return false;
     }
-    resultPrint("edit", dataRes.title);
+    resultPrint("edit", dataRes.title, event);
 }
 
 const deleteBook = async (event) => {
@@ -115,9 +125,6 @@ const arrayCleaner = (event, type) => {
     if (!validation.state) {
         const response = document.getElementById("response");
         response.innerHTML = validation.message;
-        setTimeout(() => {
-            response.innerHTML = "";
-        }, 5000);
 
         return false;
     }
@@ -147,8 +154,9 @@ const arrayCleaner = (event, type) => {
     return data;
 }
 
-const resultPrint = (type, title) => {
+const resultPrint = (type, title, event) => {
     const response = document.getElementById("response");
+    response.classList.replace("text-danger-emphasis", "text-success-emphasis");
     let text;
     if (type === "create") {
         text = `${title} Created!`;
@@ -156,11 +164,8 @@ const resultPrint = (type, title) => {
         text = `${title} (${idHolder}) Edited!`;
     }
     response.innerHTML = text;
-    setTimeout(() => {
-        response.innerHTML = "";
-    }, 3000);
 
-    defaultForm();
+    addForm(true);
     getAll();
 
     const tableRes = document.getElementById("table-body-res");
@@ -169,7 +174,11 @@ const resultPrint = (type, title) => {
     }
 }
 
-const edit = async (event) => {
+const editForm = async (event) => {
+    const response = document.getElementById("response");
+    response.parentElement.classList.replace("d-inline-block", "d-none");
+    response.classList.replace("text-success-emphasis", "text-danger-emphasis");
+
     const rowId = event.target.parentElement.parentElement.id;
     const data = await getBookAdapter(rowId);
     idHolder = data.id;
@@ -191,22 +200,22 @@ const edit = async (event) => {
     editForm.onsubmit = editBook;
     editForm.innerHTML += `
         <label class="form-label edit-label" for="title-edit">Title:</label>
-        <input class="form-control d-inline w-auto mb-2" id="title-edit" type="text" name="title" placeholder="Title" required value="${data.title}"><br/>
+        <input class="form-control d-inline w-auto mb-2" id="title-edit" type="text" name="title" placeholder="Title" onkeydown="resCleaner()" required value="${data.title}"><br/>
         <label class="form-label edit-label" for="author-edit">Author:</label>
-        <input class="form-control d-inline w-auto mb-2" id="author-edit" type="text" name="author" placeholder="Autor" required value="${data.author}"><br/>
+        <input class="form-control d-inline w-auto mb-2" id="author-edit" type="text" name="author" placeholder="Autor" onkeydown="resCleaner()" required value="${data.author}"><br/>
         <label class="form-label edit-label" for="pages-edit">Pages:</label>
-        <input class="form-control d-inline w-auto mb-2" id="pages-edit" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required value="${data.pages}"><br/>
+        <input class="form-control d-inline w-auto mb-2" id="pages-edit" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" onkeydown="resCleaner()" required value="${data.pages}"><br/>
         <label class="form-label edit-label" for="genre-edit">Genre:</label>
-        <input class="form-control d-inline w-auto mb-2" id="genre-edit" type="text" name="genre" placeholder="Genre" required value="${data.genre}"><br/>
+        <input class="form-control d-inline w-auto mb-2" id="genre-edit" type="text" name="genre" placeholder="Genre" onkeydown="resCleaner()" required value="${data.genre}"><br/>
         <label class="form-label edit-label" for="year-edit">Year:</label>
-        <input class="form-control d-inline w-auto mb-3" id="year-edit" type="number" name="year" placeholder="Year" required value="${data.year}"><br/>
+        <input class="form-control d-inline w-auto mb-3" id="year-edit" type="number" name="year" placeholder="Year" onkeydown="resCleaner()" required value="${data.year}"><br/>
         <label class="form-check-label" for="available">Available</label>
         <input class="form-check-input" type="radio" name="status" value="available" id="available" ${available}>
         <label class="form-check-label" for="unavailable">Unavailable</label>
         <input class="form-check-input" type="radio" name="status" value="unavailable" id="unavailable" ${unavailable}>
         <div class="mt-3">
             <button class="btn btn-success" type="submit">Edit book</button>
-            <button class="btn btn-outline-info" type="button" onclick='defaultForm()'>Cancel</button>
+            <button class="btn btn-outline-info" type="button" onclick='addForm()'>Cancel</button>
         </div>
     `;
     mainForm.appendChild(editForm);
@@ -218,7 +227,13 @@ const edit = async (event) => {
     mainForm.scrollIntoView(true);
 }
 
-const defaultForm = () => {
+const addForm = (post = false) => {
+    if (!post) {
+        const response = document.getElementById("response");
+        response.parentElement.classList.replace("d-inline-block", "d-none");
+        response.classList.replace("text-success-emphasis", "text-danger-emphasis");
+    }
+
     const mainForm = document.getElementById("main-form");
     mainForm.innerHTML = "<h1 class='text-center text-lg-start'>Add Book</h1>";
 
@@ -227,11 +242,11 @@ const defaultForm = () => {
     addForm.className = "border border-secondary rounded-3 p-3";
     addForm.onsubmit = createBook;
     addForm.innerHTML += `    
-        <input class="form-control w-auto mb-2" type="text" name="title" placeholder="Title" required>
-        <input class="form-control w-auto mb-2" type="text" name="author" placeholder="Autor" required>
-        <input class="form-control w-auto mb-2" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" required>
-        <input class="form-control w-auto mb-2" type="text" name="genre" placeholder="Genre" required>
-        <input class="form-control w-auto mb-2" type="number" name="year" placeholder="Year" required>
+        <input class="form-control w-auto mb-2" type="text" name="title" placeholder="Title" onkeydown="resCleaner()" required>
+        <input class="form-control w-auto mb-2" type="text" name="author" placeholder="Autor" onkeydown="resCleaner()" required>
+        <input class="form-control w-auto mb-2" type="number" name="pages" placeholder="Pages" min="1" step="1" pattern="\d*" onkeydown="resCleaner()" required>
+        <input class="form-control w-auto mb-2" type="text" name="genre" placeholder="Genre" onkeydown="resCleaner()" required>
+        <input class="form-control w-auto mb-2" type="number" name="year" placeholder="Year" onkeydown="resCleaner()" required>
         <label class="form-check-label" for="available">Available</label>
         <input class="form-check-input" type="radio" name="status" value="available" id="available" checked>
         <label class="form-check-label" for="unavailable">Unavailable</label>
