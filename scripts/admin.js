@@ -114,11 +114,14 @@ const retrieveBook = async (event) => {
     event.preventDefault();
     const row = event.target.parentElement.parentElement;
     const rowId = row.id;
-    const userName = row.children[2].innerHTML;
+    const userName = row.children[3].innerHTML;
     const dataRes = await returnBookAdapter(rowId, userName, "admin");
+    const response = document.getElementById("response");
+    response.parentElement.classList.replace("d-none", "d-inline-block");
 
     if (!dataRes) {
-        //Do something if the return fail
+        response.innerHTML = `(${rowId}) ${row.children[2].innerHTML} cannot be retrieved!`;
+        response.parentElement.scrollIntoView(true);
         return false;
     }
 
@@ -227,8 +230,8 @@ const editForm = async (event) => {
     mainForm.appendChild(editForm);
 
     const infoText = document.getElementById("info-text");
-    infoText.innerHTML = `Edit a book modifying all its attributes (except the ID).<br /><br />Hint: if a book is currently checked out, 
-    you can't edit it, instead retrieve it first in the <a href="#reservation-table">Reservation List</a>`;
+    infoText.innerHTML = `Edit a book modifying all its attributes (except the ID).<br /><br />Hint: if a book is currently on loan, 
+    you can't edit it, instead, retrieve it first in the <a href="#reservation-table">Reservation List</a>`;
 
     mainForm.scrollIntoView(true);
 }
