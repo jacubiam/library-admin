@@ -98,7 +98,17 @@ export const fillTable = async (arr, target, context) => {
             case "admin":
                 action = `
                     <button class='btn btn-warning mb-1 mb-xl-0' type='button' onclick='editForm(event)'>Edit</button>
-                    <button class='btn btn-danger' type='button' onclick='deleteBook(event)'>Delete</button>
+                    <div class="dropdown-center d-inline-block">
+                        <button class="btn btn-danger" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Delete
+                        </button>
+                        <div class="dropdown-menu text-center p-2">
+                            Delete <span class='text-danger-emphasis'>${value.title}</span>?<br />
+                            <button class='btn btn-danger mt-2' type='button' onclick='deleteBook(event)'>Yes</button>
+                            <button class='btn btn-outline-info mt-2' type='button'>Cancel</button>
+                        </div>
+                    </div>
                 `;
                 break;
             case "reserv":

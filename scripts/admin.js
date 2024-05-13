@@ -84,14 +84,19 @@ const editBook = async (event) => {
 }
 
 const deleteBook = async (event) => {
-    event.preventDefault();
-    const row = event.target.parentElement.parentElement;
+    const row = event.target.parentElement.parentElement.parentElement.parentElement;
     const rowId = row.id;
     const dataRes = await deleteBookAdapter(rowId);
+    const response = document.getElementById("response");
+    response.parentElement.classList.replace("d-none", "d-inline-block");
+    response.classList.replace("text-success-emphasis", "text-danger-emphasis");
 
     if (dataRes) {
         getAll();
         const tableBody = row.parentElement;
+        response.classList.replace("text-danger-emphasis", "text-success-emphasis");
+        response.innerHTML = `(${rowId}) ${row.children[2].innerHTML} deleted!`
+
         if (tableBody.id === "table-body-res") {
             row.remove();
             if (tableBody.childElementCount === 0) {
@@ -100,7 +105,8 @@ const deleteBook = async (event) => {
             }
         }
     } else {
-        //When Delete fails Do Something
+        response.innerHTML = `(${rowId}) ${row.children[2].innerHTML} not deleted (does not exist or is on loan)`;
+        response.parentElement.scrollIntoView(true);
     }
 }
 
@@ -259,6 +265,7 @@ const addForm = (post = false) => {
     infoText.innerHTML = "Add a book filling all the fields, the ID is random generated";
 }
 
+//Unused function
 const clearFields = (event) => {
     const target = event.target;
     for (let i = 0; i < target.length; i++) {

@@ -50,6 +50,10 @@
     position: absolute;
 }
 
+.max-w-res {
+    max-width: 600px;
+}
+
 .info-icon:hover {
     content: url("./assets/info-circle-hover.png");
 }
