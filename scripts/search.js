@@ -49,7 +49,7 @@ const searchPerform = async (filter, input, context) => {
         const response = document.getElementById("response");
         response.parentElement.classList.replace("d-none", "d-inline-block");
         response.classList.replace("text-success-emphasis", "text-danger-emphasis");
-        response.innerHTML = `We do not have a book with: the <span>${input}</span> <span>${filter}</span>`;
+        response.innerHTML = `No book was found with the <span class='fw-bold'>${filter} ${input}</span>`;
         const tableRes = document.getElementById("response-table");
         tableRes.innerHTML = "";
         return false;
