@@ -86,20 +86,26 @@
                 </button>
             </div>
             <div>
-                <span>Sort:</span>
-                <select class="form-select d-inline w-auto" id="select-list" aria-label="Select sort"
-                    onchange="sortListMain()">
-                    <option value="id">ID</option>
-                    <option selected value="title">Title</option>
-                    <option value="author">Author</option>
-                    <option value="pages">Pages</option>
-                    <option value="genre">Genre</option>
-                    <option value="year">Year</option>
-                    <option value="status">Status</option>
-                </select>
-                <label class="form-check-label" for="order-list">Descending</label>
-                <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list"
-                    onchange="sortListMain()">
+                <div class="d-inline-block align-middle">
+                    <span>Sort:</span>
+                    <select class="form-select d-inline w-auto" id="select-list" aria-label="Select sort"
+                        onchange="sortListMain()">
+                        <option value="id">ID</option>
+                        <option selected value="title">Title</option>
+                        <option value="author">Author</option>
+                        <option value="pages">Pages</option>
+                        <option value="genre">Genre</option>
+                        <option value="year">Year</option>
+                        <option value="status">Status</option>
+                    </select>
+                </div>
+                <div class="d-inline-block align-middle border border-1 rounded-1 p-1">
+                    <label class="form-check-label" for="order-list">Descending</label>
+                    <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list"
+                        onchange="sortListMain()"><br />
+                    <label class="form-check-label border-top" for="na-filter">Only Available</label>
+                    <input class="form-check-input align-text-top" type="checkbox" name="na-filter" id="na-filter" onchange="sortListMain()" checked>
+                </div>
             </div>
         </div>
         <table id="collapse-table" class="collapse show table table-sm table-bordered table-hover">

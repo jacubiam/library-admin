@@ -84,6 +84,16 @@ export const sorter = (arr, sort, descend) => {
     return arr;
 }
 
+export const filterNA = (arr) => {
+    const data = arr.filter((element) => {
+        if (element.status !== "unavailable") {
+            return element;
+        }
+    });
+
+    return data;
+}
+
 export const fillTable = async (arr, target, context) => {
     let iterator = 0;
     arr.forEach(value => {

@@ -1,5 +1,5 @@
 import { getAllData } from "./adapters.js";
-import { sorter, fillTable } from "./utils.js";
+import { sorter, filterNA, fillTable } from "./utils.js";
 let listCache = undefined;
 let reservCache = undefined;
 
@@ -8,6 +8,12 @@ export const getAllMain = async () => {
     listCache = data;
 
     const values = sortList(data);
+    const checkboxNA = document.getElementById("na-filter");
+    if (checkboxNA) {
+        if (checkboxNA.checked) {
+            values.array = filterNA(values.array);
+        }
+    }
     fillTable(values.array, values.target, "main");
 }
 

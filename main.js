@@ -1,5 +1,7 @@
 let validateMain;
-let getAll, search, sortBookList, sortBookResult, fillTableFunc;
+let getAll, sortBookList;
+let search, sortBookResult;
+let fillTableFunc, filterNAFunc;
 let loanAdapter, returnBookAdapter;
 let searchSubmit, resCleaner, cleanResults, listToggler, searchForm;
 
@@ -7,14 +9,14 @@ const importer = async () => {
     const { validate } = await import("./scripts/mainValidator.js");
     const { getAllMain, sortList } = await import("./scripts/list.js");
     const { searchBookMain, sortResult } = await import("./scripts/search.js");
-    const { fillTable } = await import("./scripts/utils.js");
+    const { fillTable, filterNA } = await import("./scripts/utils.js");
     const { loanBook, returnBook } = await import("./scripts/adapters.js");
     const { searchSubmitFunc, resCleanerFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc, hamburgerListener } = await import("./scripts/commons.js");
 
     validateMain = validate;
     getAll = getAllMain, sortBookList = sortList;
     search = searchBookMain, sortBookResult = sortResult;
-    fillTableFunc = fillTable;
+    fillTableFunc = fillTable, filterNAFunc = filterNA;
     loanAdapter = loanBook, returnBookAdapter = returnBook;
     searchSubmit = searchSubmitFunc, resCleaner = resCleanerFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
 
@@ -88,11 +90,23 @@ const returnBook = async (event) => {
 
 const sortListMain = () => {
     const values = sortBookList();
+    const checkboxNA = document.getElementById("na-filter");
+    if (checkboxNA) {
+        if (checkboxNA.checked) {
+            values.array = filterNAFunc(values.array);
+        }
+    }
     fillTableFunc(values.array, values.target, "main");
 }
 
 const sortResultMain = () => {
     const values = sortBookResult();
+    const checkboxNA = document.getElementById("na-filter-res");
+    if (checkboxNA) {
+        if (checkboxNA.checked) {
+            values.array = filterNAFunc(values.array);
+        }
+    }
     fillTableFunc(values.array, values.target, "main");
 }
 

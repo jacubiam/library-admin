@@ -1,5 +1,5 @@
 import { searchBook } from "./adapters.js";
-import { sorter, fillTable } from "./utils.js";
+import { sorter, filterNA, fillTable } from "./utils.js";
 
 let resultCache = undefined;
 let lastFilter = undefined;
@@ -18,6 +18,12 @@ export const searchBookMain = async (filter = lastFilter, input = lastInput) => 
     tableResult("main");
 
     const values = sortResult(data);
+    const checkboxNA = document.getElementById("na-filter-res");
+    if (checkboxNA) {
+        if (checkboxNA.checked) {
+            values.array = filterNA(values.array);
+        }
+    }
     fillTable(values.array, values.target, "main");
 }
 
@@ -74,18 +80,26 @@ const tableResult = (context) => {
             <button class="btn btn-outline-light align-text-top ms-3" type="button" onclick="cleanResults()">Clear</button>
         </div>
         <div>
-            <span>Sort:</span>
-            <select class="form-select d-inline w-auto" id="select-list-res" aria-label="Select sort" onchange=${sorter}>
-                <option value="id">ID</option>
-                <option selected value="title">Title</option>
-                <option value="author">Author</option>
-                <option value="pages">Pages</option>
-                <option value="genre">Genre</option>
-                <option value="year">Year</option>
-                <option value="status">Status</option>
-            </select>
-            <label class="form-check-label" for="order-list-res">Descending</label>
-            <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list-res" onchange=${sorter}>
+            <div class="d-inline-block align-middle">
+                <span>Sort:</span>
+                <select class="form-select d-inline w-auto" id="select-list-res" aria-label="Select sort" onchange=${sorter}>
+                    <option value="id">ID</option>
+                    <option selected value="title">Title</option>
+                    <option value="author">Author</option>
+                    <option value="pages">Pages</option>
+                    <option value="genre">Genre</option>
+                    <option value="year">Year</option>
+                    <option value="status">Status</option>
+                </select>
+            </div>
+            <div class="d-inline-block align-middle border border-1 rounded-1 p-1">
+                <label class="form-check-label" for="order-list-res">Descending</label>
+                <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list-res" onchange=${sorter}>
+                ${context === "main" ?
+            `   <br /><label class="form-check-label border-top" for="na-filter-res">Only Available</label>
+                    <input class="form-check-input align-text-top" type="checkbox" name="na-filter" id="na-filter-res" onchange=${sorter} checked>`
+            : ""}
+            </div>
         </div>
     </div>
     <table class="table table-sm table-bordered table-hover">
