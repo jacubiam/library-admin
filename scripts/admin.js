@@ -1,7 +1,7 @@
 let validateAdmin;
 let getAll, sortBookList, getAllReservations, sortBookReservations;
 let search, sortBookResult;
-let fillTableFunc;
+let fillTableFunc, filterOLFunc;
 let createBookAdapter, getBookAdapter, editBookAdapter, deleteBookAdapter, returnBookAdapter, getReservAdapter;
 let searchSubmit, resCleaner, cleanResults, listToggler, searchForm;
 
@@ -9,14 +9,14 @@ const importer = async () => {
     const { validate } = await import("./adminValidator.js");
     const { getAllAdmin, getAllReserv, sortList, sortReserv } = await import("./list.js");
     const { searchBookAdmin, sortResult } = await import("./search.js");
-    const { fillTable } = await import("./utils.js");
+    const { fillTable, filterOL } = await import("./utils.js");
     const { createBook, getBook, editBook, deleteBook, returnBook, getReserv } = await import("./adapters.js");
     const { searchSubmitFunc, resCleanerFunc, cleanResultsFunc, listTogglerFunc, searchFormFunc, hamburgerListener } = await import("./commons.js");
 
     validateAdmin = validate;
     getAll = getAllAdmin, sortBookList = sortList, getAllReservations = getAllReserv, sortBookReservations = sortReserv;
     search = searchBookAdmin, sortBookResult = sortResult;
-    fillTableFunc = fillTable;
+    fillTableFunc = fillTable, filterOLFunc = filterOL;
     createBookAdapter = createBook, getBookAdapter = getBook, editBookAdapter = editBook, deleteBookAdapter = deleteBook, returnBookAdapter = returnBook, getReservAdapter = getReserv;
     searchSubmit = searchSubmitFunc, resCleaner = resCleanerFunc, cleanResults = cleanResultsFunc, listToggler = listTogglerFunc, searchForm = searchFormFunc;
 
@@ -280,11 +280,23 @@ const clearFields = (event) => {
 
 const sortListAdmin = () => {
     const values = sortBookList();
+    const checkboxOL = document.getElementById("ol-filter");
+    if (checkboxOL) {
+        if (checkboxOL.checked) {
+            values.array = filterOLFunc(values.array);
+        }
+    }
     fillTableFunc(values.array, values.target, "admin");
 }
 
 const sortResultAdmin = () => {
     const values = sortBookResult();
+    const checkboxOL = document.getElementById("ol-filter-res");
+    if (checkboxOL) {
+        if (checkboxOL.checked) {
+            values.array = filterOLFunc(values.array);
+        }
+    }
     fillTableFunc(values.array, values.target, "admin");
 }
 

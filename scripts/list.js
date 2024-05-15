@@ -1,5 +1,5 @@
 import { getAllData } from "./adapters.js";
-import { sorter, filterNA, fillTable } from "./utils.js";
+import { sorter, filterNA, filterOL, fillTable } from "./utils.js";
 let listCache = undefined;
 let reservCache = undefined;
 
@@ -22,6 +22,12 @@ export const getAllAdmin = async () => {
     listCache = data;
 
     const values = sortList(data);
+    const checkboxOL = document.getElementById("ol-filter");
+    if (checkboxOL) {
+        if (checkboxOL.checked) {
+            values.array = filterOL(values.array);
+        }
+    }
     fillTable(values.array, values.target, "admin");
 }
 

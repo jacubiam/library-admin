@@ -1,5 +1,5 @@
 import { searchBook } from "./adapters.js";
-import { sorter, filterNA, fillTable } from "./utils.js";
+import { sorter, filterNA, fillTable, filterOL } from "./utils.js";
 
 let resultCache = undefined;
 let lastFilter = undefined;
@@ -40,6 +40,12 @@ export const searchBookAdmin = async (filter = lastFilter, input = lastInput) =>
     tableResult("admin");
 
     const values = sortResult(data);
+    const checkboxOL = document.getElementById("ol-filter-res");
+    if (checkboxOL) {
+        if (checkboxOL.checked) {
+            values.array = filterOL(values.array);
+        }
+    }
     fillTable(values.array, values.target, "admin");
 }
 
@@ -97,8 +103,9 @@ const tableResult = (context) => {
                 <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list-res" onchange=${sorter}>
                 ${context === "main" ?
             `   <br /><label class="form-check-label border-top" for="na-filter-res">Only Available</label>
-                    <input class="form-check-input align-text-top" type="checkbox" name="na-filter" id="na-filter-res" onchange=${sorter} checked>`
-            : ""}
+                <input class="form-check-input align-text-top" type="checkbox" name="na-filter" id="na-filter-res" onchange=${sorter} checked>`
+            : ` <br /><label class="form-check-label border-top" for="ol-filter-res">Not On Loan</label>
+                <input class="form-check-input align-text-top" type="checkbox" name="ol-filter" id="ol-filter-res" onchange=${sorter} checked>`}
             </div>
         </div>
     </div>
@@ -113,6 +120,7 @@ const tableResult = (context) => {
                 <th>Genre</th>
                 <th>Year</th>
                 <th>Status</th>
+                ${context === "admin" ? `<th>On loan</th>`:""}
                 <th class="width-actions">Actions</th>
             </tr>
         </thead>

@@ -103,9 +103,13 @@
                     <option value="year">Year</option>
                     <option value="status">Status</option>
                 </select>
-                <label class="form-check-label" for="order-list">Descending</label>
-                <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list"
-                    onchange="sortListAdmin()">
+                <div class="d-inline-block align-middle border border-1 rounded-1 p-1">
+                    <label class="form-check-label" for="order-list">Descending</label>
+                    <input class="form-check-input align-text-top" type="checkbox" name="order" id="order-list"
+                        onchange="sortListAdmin()"><br />
+                    <label class="form-check-label border-top" for="ol-filter">Not On Loan</label>
+                    <input class="form-check-input align-text-top" type="checkbox" name="ol-filter" id="ol-filter" onchange="sortListAdmin()" checked>
+                </div>
             </div>
         </div>
         <table id="collapse-table" class="collapse show table table-sm table-bordered table-hover">
@@ -119,6 +123,7 @@
                     <th>Genre</th>
                     <th>Year</th>
                     <th>Status</th>
+                    <th>On loan</th>
                     <th class="width-actions">Actions</th>
                 </tr>
             </thead>
