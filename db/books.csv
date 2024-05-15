@@ -1,16 +1,16 @@
-id,title,author,pages,genre,year,status
-265,"Harry Potter and the Sorcerer's Stone","J.K. Rowling",320,Fantasy,1997,available
-2410,"The Hunger Games","Suzanne Collins",374,"Young Adult",2008,available
-712,Twilight,"Stephenie Meyer",498,"Young Adult",2005,available
-9494,"Don Quixote","Miguel de Cervantes",900,"Classic Literature",1615,available
-3246,"A Tale of Two Cities","Charles Dickens",352,"Historical Fiction",1859,available
-5888,"The Lord of the Rings","J.R.R. Tolkien",1200,"Epic Fantasy",1955,available
-3656,"To Kill a Mockingbird","Harper Lee",281,Classic,1960,available
-2536,1984,"George Orwell",328,"Dystopian Fiction",1949,available
-5687,"Pride and Prejudice","Jane Austen",279,Classic,1813,available
-2329,"The Great Gatsby","F. Scott Fitzgerald",180,Classic,1925,available
-4840,"A Game of Thrones","George R. R. Martin",694,"Epic Fantasy",1996,unavailable
-2944,"Shutter Island","Dennis Lehane",380,"Psychological Horror",2003,unavailable
-2362,"Fight Club","Chuck Palahniuk",208,"Satirical Novel",1996,unavailable
-1330,"Forrest Gump","Winston Groom",228,"Comedy Drama",1986,unavailable
-1545,"The Godfather","Mario Puzo",446,Crime,1969,unavailable
+id,title,author,pages,genre,year,status,on_loan
+265,"Harry Potter and the Sorcerer's Stone","J.K. Rowling",320,Fantasy,1997,available,false
+2410,"The Hunger Games","Suzanne Collins",374,"Young Adult",2008,available,false
+712,Twilight,"Stephenie Meyer",498,"Young Adult",2005,available,false
+9494,"Don Quixote","Miguel de Cervantes",900,"Classic Literature",1615,available,false
+3246,"A Tale of Two Cities","Charles Dickens",352,"Historical Fiction",1859,available,false
+5888,"The Lord of the Rings","J.R.R. Tolkien",1200,"Epic Fantasy",1955,available,false
+3656,"To Kill a Mockingbird","Harper Lee",281,Classic,1960,available,false
+2536,1984,"George Orwell",328,"Dystopian Fiction",1949,available,false
+5687,"Pride and Prejudice","Jane Austen",279,Classic,1813,available,false
+2329,"The Great Gatsby","F. Scott Fitzgerald",180,Classic,1925,available,false
+4840,"A Game of Thrones","George R. R. Martin",694,"Epic Fantasy",1996,unavailable,true
+2944,"Shutter Island","Dennis Lehane",380,"Psychological Horror",2003,unavailable,true
+2362,"Fight Club","Chuck Palahniuk",208,"Satirical Novel",1996,unavailable,true
+1330,"Forrest Gump","Winston Groom",228,"Comedy Drama",1986,unavailable,true
+1545,"The Godfather","Mario Puzo",446,Crime,1969,unavailable,true

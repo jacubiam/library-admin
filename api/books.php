@@ -36,13 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
         if (!(array_search(strtolower($_GET['query']), $keys) === false)) {
             if (isset($_GET['search'])) {
                 $books = Book::get_all($url);
-                $search = $_GET['search']; 
+                $search = $_GET['search'];
                 $books_filtered = array_filter($books, function ($book) use ($search) {
                     return (strtolower($book[$_GET['query']]) === strtolower($search));
                 });
                 $books_filtered = array_slice($books_filtered, 0);
                 sort($books_filtered);
-    
+
                 if (count($books_filtered) !== 0) {
                     echo json_encode($books_filtered);
                     exit();
@@ -126,8 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] === "PUT") {
         exit();
     }
 
-    $get_book->edit_item($put_data);
-    echo json_encode($get_book);
+    $get_book->edit_item($put_data + array("on_loan" => $get_book->get_on_loan()));
+    $edited_book = Book::get_item($put_data['id'], $url);
+    echo json_encode($edited_book);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {

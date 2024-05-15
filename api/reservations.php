@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    header('Content-type: application/json');
     $raw_data = file_get_contents('php://input');
     $post_data = json_decode($raw_data, true);
 
@@ -73,11 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $new_reserv = new Reservation($id_book, $book->get_title(), $user_name);
         $new_reserv->create_item();
         $book->set_status("unavailable");
-        header('Content-type: application/json');
+        $book->set_on_loan(true);
+        $book->edit_item($book->get_all_vars());
+
         echo json_encode(array("res" => "($id_book) lent!"));
     } else {
         http_response_code(403);
-        header('Content-type: application/json');
         echo json_encode(array("res" => "Book Unavaliable"));
     }
 }
@@ -115,6 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
             }
 
             $retrieve->set_status("available");
+            $retrieve->set_on_loan(false);
+            $retrieve->edit_item($retrieve->get_all_vars());
+
             http_response_code(202);
             echo json_encode(array("res" => "Returned it"));
         } else {

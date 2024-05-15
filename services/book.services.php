@@ -7,6 +7,7 @@ class Book extends Adapter implements JsonSerializable
     private $genre;
     private $year;
     private $status;
+    private $on_loan;
 
     public function __construct(...$args)
     {
@@ -36,6 +37,7 @@ class Book extends Adapter implements JsonSerializable
         $this->genre = $fields['genre'];
         $this->year = $fields['year'];
         $this->status = $fields['status'];
+        $this->on_loan = "false";
     }
 
     public function jsonSerialize()
@@ -48,7 +50,7 @@ class Book extends Adapter implements JsonSerializable
     public function create_item()
     {
         $url = $this->url;
-        $data = $data = get_object_vars($this);
+        $data = get_object_vars($this);
         unset($data['url']);
         $data = array_values($data);
         $handle = fopen($url, 'a');
@@ -56,18 +58,34 @@ class Book extends Adapter implements JsonSerializable
         fclose($handle);
     }
 
-    public function get_status(){
+    public function get_status()
+    {
         return $this->status;
     }
 
-    public function set_status($status){
+    public function set_status($status)
+    {
         $this->status = $status;
-        $data = get_object_vars($this);
-        unset($data['url']);
-        $this->edit_item($data);
     }
 
-    public function get_title(){
+    public function get_title()
+    {
         return $this->title;
+    }
+
+    public function get_on_loan()
+    {
+        return $this->on_loan;
+    }
+
+    public function set_on_loan(bool $value)
+    {
+        $this->on_loan = $value ? "true" : "false";
+    }
+
+    public function get_all_vars(){
+        $data = get_object_vars($this);
+        unset($data['url']); 
+        return $data;
     }
 }
